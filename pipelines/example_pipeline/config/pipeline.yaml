@@ -1,16 +1,13 @@
-classname: pipelines.example_pipeline.pipeline.ExamplePipeline
+# {sa1.met.z01.b0}.{20221001}.{190000}.nc
+triggers: [.*z06.*\.csv, .*z06.*\.csv]
 
-triggers:
-  - .*z06.*\.csv
+inputs:
+  reader: pipelines.example_pipeline.pipeline.ExamplePipeline
+  variables:
+    - time
+    - wind_speed
+    - wind_direction
 
-retriever:
-  path: pipelines/example_pipeline/config/retriever.yaml
-
-dataset:
-  path: pipelines/example_pipeline/config/dataset.yaml
-
-quality:
-  path: shared/quality.yaml
-
-storage:
-  path: shared/storage.yaml
+outputs:
+  bucket_name: a2e-athena-test
+  storage_root: timestream/jobs/{date}.{time}/awaken/{dataset}/
