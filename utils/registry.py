@@ -2,27 +2,24 @@ import logging
 import re
 from pathlib import Path
 from typing import Dict, List, Pattern
+
 from tsdat import PipelineConfig, read_yaml
 
 logger = logging.getLogger(__name__)
 
-__all__ = ["PipelineRegistry"]
 
 class PipelineRegistry:
-    """---------------------------------------------------------------------------------
-    Registry of Pipelines that can be run on input keys.
-
-    ---------------------------------------------------------------------------------"""
+    """Registry of Pipelines that can be run on input keys."""
 
     def __init__(self):
         self._modules: List[str] = list()
         self._cache: Dict[Path, List[Pattern[str]]] = {}
         self._load()
 
-    def dispatch(self, input_keys: List[str], clump: bool = False, multidispatch: bool = False):
-        """-----------------------------------------------------------------------------
-        Instantiates and runs the appropriate Pipeline for the provided input files.
-        according to the ingest's `mapping` specifications.
+    def dispatch(
+        self, input_keys: List[str], clump: bool = False, multidispatch: bool = False
+    ):
+        """Instantiates and runs the appropriate Pipeline for the provided input files.
 
         Args:
             input_keys (List[str]]): A list of keys that the pipeline will process. Most
@@ -37,8 +34,7 @@ class PipelineRegistry:
 
         Returns:
             bool: True if the Pipeline ran without error, False otherwise.
-
-        -----------------------------------------------------------------------------"""
+        """
         successes = 0
         failures = 0
         skipped = 0
@@ -48,10 +44,10 @@ class PipelineRegistry:
 
             if not multidispatch and len(config_files) > 1:
                 raise RuntimeError(
-                        f"More than one match for input key '{input_key}'. Please"
-                        " update the pipeline triggers to remove duplicate matches."
-                        f" Found matches: {config_files}"
-                    )
+                    f"More than one match for input key '{input_key}'. Please"
+                    " update the pipeline triggers to remove duplicate matches."
+                    f" Found matches: {config_files}"
+                )
             elif not len(config_files):
                 logger.warning(
                     "No pipeline configuration found matching input key '%s'", input_key
@@ -80,7 +76,7 @@ class PipelineRegistry:
                             inputs,
                         )
                         failures += 1
-        
+
         logger.info(
             "Processing completed with %s successes, %s failures, and %s skipped.",
             successes,
@@ -90,15 +86,14 @@ class PipelineRegistry:
         return successes, failures, skipped
 
     def _load(self, folder: Path = Path("pipelines")):
-        """-----------------------------------------------------------------------------
-        Discovers all pipelines under the parent module and registers them for later
+        """Discovers all pipelines under the parent module and registers them for later
         use.
 
         Args:
             folder (str, optional): The module (relative to the "ingest-awaken"
                 folder) under which individual ingests live. Defaults to "ingest".
 
-        -----------------------------------------------------------------------------"""
+        """
         config_paths = list(folder.glob("**/*pipeline*.yaml"))
         for path in config_paths:
             trigger_strs = read_yaml(path)["triggers"]
@@ -109,8 +104,7 @@ class PipelineRegistry:
             )
 
     def _match_input_key(self, input_key: str) -> List[Path]:
-        """-----------------------------------------------------------------------------
-        Matches the provided key to registered pipeline configuration filepaths.
+        """Matches the provided key to registered pipeline configuration filepaths.
 
         Args:
             input_key (str): The input key (most commonly the path to a file to
@@ -120,7 +114,7 @@ class PipelineRegistry:
             List[Path]: The pathes to the pipeline configuration files whose triggers
                 match the input key.
 
-        -----------------------------------------------------------------------------"""
+        """
 
         matches: List[Path] = []
         for path, regex_list in self._cache.items():
@@ -129,4 +123,3 @@ class PipelineRegistry:
                     matches.append(path)
                     break
         return matches
-        

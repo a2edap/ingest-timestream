@@ -6,7 +6,6 @@ import typer
 
 from utils.registry import PipelineRegistry
 
-
 logger = logging.getLogger(__name__)
 
 app = typer.Typer(add_completion=False)
@@ -37,17 +36,14 @@ def run_pipeline(
         "input key will be used to process the input key.",
     ),
     verbose: bool = typer.Option(False, help="Turn logging level up to DEBUG."),
-    # pipeline: str = typer.Option() # IDEA: Ability to run a specific ingest / folder
 ):
     """Main entry point to the ingest controller. This script takes a path to an input
     file, automatically determines which ingest(s) to use, and runs those ingests on the
     provided input data."""
 
     # If in verbose mode, then turn up logging to DEBUG
-    if verbose:
-        logging.basicConfig(level=logging.DEBUG)
-    else:
-        logging.basicConfig(level=logging.INFO)
+    logging_level = logging.DEBUG if verbose else logging.INFO
+    logging.basicConfig(level=logging_level)
 
     # Downstream code expects a list of strings
     files = [str(file) for file in filepaths]
