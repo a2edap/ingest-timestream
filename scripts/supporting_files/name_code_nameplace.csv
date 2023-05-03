@@ -1,0 +1,537 @@
+﻿plant_name,plant_code,unique_id,ba_id,nameplate
+,,Ardenville Wind (ARD1)*1WT34,AESO,34
+,,Ardenville Wind (ARD1)*2WT34,AESO,34
+,,Blackspring Ridge (BSR1)*1WT150,AESO,150
+,,Blackspring Ridge (BSR1)*2WT150,AESO,150
+,,Blue Trail Wind (BTR1)*1WT66,AESO,66
+,,Buffalo Atlee Wind Farm 11WT18,AESO,18
+,,Buffalo Atlee Wind Farm 21WT14,AESO,14
+,,Buffalo Atlee Wind Farm 31WT17,AESO,17
+,,BUL1 Bull Creek (BUL1)*1WT13,AESO,13
+,,BUL2 Bull Creek (BUL2)*2WT16,AESO,16
+,,Castle River #1 (CR1)*1WT20,AESO,20
+,,Castle River #1 (CR1)*2WT19,AESO,19
+,,Castle Rock Ridge 2 (CRR2)*1WT29,AESO,29
+,,Castle Rock Wind Farm (CRR1)*1WT77,AESO,77
+,,Cowley Ridge (CRE3)*1WT20,AESO,20
+,,Cypress Wind Power Project1WT201.6,AESO,201.6
+,,Enmax Taber (TAB1)*2WT41,AESO,41
+,,Enmax Taber (TAB1)*1WT40,AESO,40
+,,Forty Mile Granlea WAGF1WT200,AESO,200
+,,Garden Plain Wind1WT131,AESO,131
+,,Ghost Pine (NEP1)*5WT21,AESO,21
+,,Ghost Pine (NEP1)*1WT16,AESO,16
+,,Ghost Pine (NEP1)*2WT16,AESO,16
+,,Ghost Pine (NEP1)*4WT16,AESO,16
+,,Ghost Pine (NEP1)*3WT13,AESO,13
+,,Halkirk Wind Power Facility (H4WT75,AESO,75
+,,Halkirk Wind Power Facility (H7WT75,AESO,75
+,,Jenner Wind Power Project1WT122,AESO,122
+,,Jenner Wind Power Project 21WT180,AESO,180
+,,Jenner Wind Power Project 31WT106,AESO,106
+,,Kettles Hill (KHW1)*1WT63,AESO,63
+,,Lanfine North Wind WAGF1WT145,AESO,145
+,,McBride Lake Windfarm (AKE1)*3WT18.5,AESO,18.5
+,,McBride Lake Windfarm (AKE1)*4WT18.5,AESO,18.5
+,,McBride Lake Windfarm (AKE1)*1WT18,AESO,18
+,,McBride Lake Windfarm (AKE1)*2WT18,AESO,18
+,,Oldman 2 Wind Farm 1 (OWF1)*1WT46,AESO,46
+,,Rattlesnake Ride Wind (RTL1)1WT130,AESO,130
+,,Riverview (RIV1)*1WT105,AESO,105
+,,Soderglen Wind (GWW1)*1WT36,AESO,36
+,,Soderglen Wind (GWW1)*2WT35,AESO,35
+,,Stirling Wind Project1WT115,AESO,115
+,,Summerview 1 (IEW1)*1WT33,AESO,33
+,,Summerview 1 (IEW1)*2WT33,AESO,33
+,,Summerview 2 (IEW2)*4WT33,AESO,33
+,,Suncor Chin Chute (SCR3)*1WT30,AESO,30
+,,Suncor Magrath (SCR2)*1WT30,AESO,30
+,,Wheatland WAGF1WT120,AESO,120
+,,Whitla (WHT1)*1WT202,AESO,202
+,,Whitla (WHT2)*1WT151,AESO,151
+,,Wind1_C1WT50,AESO,50
+,,Wind1_NW1WT50,AESO,50
+,,Wind1_S11WT200,AESO,200
+,,Wind1_S21WT200,AESO,200
+,,Wind10_S11WT100,AESO,100
+,,Wind11_S21WT50,AESO,50
+,,Wind12_C1WT50,AESO,50
+,,Wind13_S21WT100,AESO,100
+,,Wind14_S11WT50,AESO,50
+,,Wind15_C1WT50,AESO,50
+,,Wind2_C1WT100,AESO,100
+,,Wind2_NE1WT50,AESO,50
+,,Wind2_S11WT50,AESO,50
+,,Wind2_S21WT200,AESO,200
+,,Wind3_C1WT100,AESO,100
+,,Wind3_S11WT50,AESO,50
+,,Wind3_S21WT100,AESO,100
+,,Wind4_C1WT50,AESO,50
+,,Windrise (WRW1)1WT207,AESO,207
+,,Wintering Hills (SCR4)*1WT16,AESO,16
+,,Wintering Hills (SCR4)*1WT16,AESO,16
+,,Wintering Hills (SCR4)*1WT14.4,AESO,14.4
+,,Wintering Hills (SCR4)*1WT14.4,AESO,14.4
+,,Wintering Hills (SCR4)*1WT14.4,AESO,14.4
+,,Wintering Hills (SCR4)*1WT12.8,AESO,12.8
+Palouse,57530,Palouse Wind1WT105.3,AVA,105.3
+Rattlesnake Flat,62936,Rattlesnake WindWT15,AVA,15
+Big Horn Wind Project,56361,Big Horn Wind133WT199.5,AVRN,199.5
+Big Horn Wind II,57319,Big Horn Wind 225WT50,AVRN,50
+Golden Hill Wind,63710,Golden Hills WindWT201.3,AVRN,201.3
+,,Golden Hills Wind267WT400,PSEI,400
+Hay Canyon Wind Power LLC,56790,Hay Canyon48WT100.8,AVRN,100.8
+Juniper Canyon I Wind Project,57320,Juniper Canyon 163WT151.19,AVRN,151.19
+Klondike Wind Power,55871,Klondike I16WT24,AVRN,24
+Klondike Windpower II,56359,Klondike II50WT75,AVRN,75
+Klondike Windpower III,56468,Klondike III80WT223.59,AVRN,223.59
+Klondike Windpower III,56468,Klondike IIIA51WT76.5,AVRN,76.5
+Leaning Juniper Wind Power II,57333,Leaning Juniper 2a43WT90.29,AVRN,90.29
+Leaning Juniper Wind Power II,57333,Leaning Juniper 2b74WT111,AVRN,111
+Montague Wind Power Facility LLC,58099,Montague135WT201.6,AVRN,201.6
+Montague Wind Power Facility LLC,58099,Montague Wind Power Facility LLC56WT200.85,AVRN,200.85
+Pebble Springs Wind LLC,56789,Pebble Springs47WT98.7,AVRN,98.7
+Skookumchuck Wind Facility,63205,Skookumchuck Wind1WT137,PSEI,137
+Star Point Wind Project LLC,57096,Star Point47WT98.7,AVRN,98.7
+Tuolumne Wind Project,56702,Tuolumne Wind Project0WT136.3,AVRN,136.3
+Windy Flats Wind Project,X57159,XWindy Point 1 (Tuolumne)62WT136.59,AVRN,136.59
+Aragonne Wind LLC,56336,Aragonne Wind1WT234.96,PNM,234.96
+Chevelon Butte Wind Farm,66001,Chevlon Butte Wind1WT238.2,AZPS,238.2
+Perrin Ranch Wind LLC,58155,Perrin Ranch1WT99.2,AZPS,99.2
+,151686,Bear Mountain1WT102,BCHA,102
+,180541,Cape Scott (formerly Knob Hill1WT99.2,BCHA,99.2
+,151682,Dokie Wind1WT144,BCHA,144
+,180450,Meikle Wind1WT184.6,BCHA,184.6
+,181143,Moose Lake1WT15,BCHA,15
+,180790,Pennask wind farm1WT15,BCHA,15
+,180455,Quality Wind1WT142.2,BCHA,142.2
+,,Saulteau1WT15,BCHA,15
+,181089,Shinish Creek wind farm1WT15,BCHA,15
+,,Sukunka Wind Energy1WT15,BCHA,15
+,,Wind_NC091WT333,BCHA,333
+,,Wind_PC141WT144,BCHA,144
+,,Wind_PC201WT156,BCHA,156
+,,Wind_PC281WT153,BCHA,153
+,,Wind_PC481WT150,BCHA,150
+,,Zonnebeke Wind Energy1WT15,BCHA,15
+"Broadview Energy JN, LLC",X60145,XPattern Operators. LP1WT182,BEJN,182
+"Broadview Energy KW, LLC",X60152,XPattern Operators. LP1WT143,BEKW,143
+,,Generic Windn/aWT50,BPA,50
+,,Generic Windn/aWT25,BPA,25
+Eurus Combine Hills Turbine Ranch 2,57137,Combine Hills 263WT63,BPAT,63
+Condon Windpower LLC,55739,Condon Wind 141WT24.6,BPAT,24.6
+Condon Windpower LLC,55739,Condon Wind 242WT25.19,BPAT,25.19
+Coastal Energy Project,57756,Grayland Wind (Coastal)4WT6,BPAT,6
+Hopkins Ridge Wind,56255,Hopkins Ridge 183WT149.4,BPAT,149.4
+Hopkins Ridge Wind,56255,Hopkins Ridge 24WT7.2,BPAT,7.2
+Sagebrush Power Partners,56858,Kittitas Valley Wind Project48WT100.8,BPAT,100.8
+Linden Wind Energy Project,57635,Linden Ranch Wind25WT50,BPAT,50
+Lower Snake River Wind Energy Project,57195,Lower Snake Wind149WT342.69,BPAT,342.69
+Nine Canyon,7936,Nine Canyon 137WT48.1,BPAT,48.1
+Nine Canyon,7936,Nine Canyon 212WT15.6,BPAT,15.6
+Nine Canyon,7936,Nine Canyon 314WT32.2,BPAT,32.2
+PaTu Wind Farm LLC,57578,PaTu Wind6WT9,BPAT,9
+Arlington Wind Power Project,56855,Rattlesnake Road (Arlington)49WT102.9,BPAT,102.9
+South Hurlburt Wind LLC,57549,Shepherds Flat - Central (South Hurlburt)116WT290,BPAT,290
+North Hurlburt Wind LLC,57526,Shepherds Flat - North (North Hurlburt)106WT265,BPAT,265
+Horseshoe Bend Wind LLC,57550,Shepherds Flat - South (Horseshoe Bend)116WT290,BPAT,290
+FPL Energy Vansycle LLC (OR),55989,Stateline Wind â€“ BPA (OR)181WT123.42,BPAT,123.42
+FPL Energy Vansycle LLC (WA),55560,Stateline Wind â€“ BPA (WA)268WT176.9,BPAT,176.9
+Vansycle,55125,Vansycle Wind 138WT25.1,BPAT,25.1
+,,West Butte Wind1WT104,BPAT,104
+Wheat Field Wind Power Project,56854,Wheat Field46WT96.59,BPAT,96.59
+Wheatridge Hybrid,62745,Wheatridge IIWT200,BPAT,200
+White Creek Wind Farm,56487,White Creek 189WT204.69,BPAT,204.69
+Harvest Wind Project,57152,White Creek 2 (Harvest Wind)43WT98.9,BPAT,98.9
+Willow Creek Energy Center,56952,Willow Creek48WT72,BPAT,72
+Windy Flats Wind Project,57159,Windy Point 2 (Windy Flats 1)88WT202.4,BPAT,202.4
+Windy Flats Wind Project,57159,Windy Point 2 Phase (2) (Windy26WT59.78,BPAT,59.78
+Mesa Wind Power LLC,50535,Alta Mesa WindWT27.28,CISO,27.28
+,,Mesa Wind ProjectWT30,CISO,30
+Alta Wind Energy Center I,57282,Alta Wind 11WT150,CISO,150
+Alta Wind X,58394,Alta Wind 101WT138,CISO,138
+Alta Wind XI,58395,Alta Wind 111WT90,CISO,90
+Alta Wind Energy Center II,57291,Alta Wind 21WT150,CISO,150
+Alta Wind Energy Center III,57292,Alta Wind 31WT150,CISO,150
+Alta Wind Energy Center IV,57293,Alta Wind 41WT102,CISO,102
+Alta Wind Energy Center V,57294,Alta Wind 51WT168,CISO,168
+Alta Wind VIII,57835,Alta Wind 81WT150,CISO,150
+,,Altamont Winds LLCWT56.2,CISO,56.2
+,,Altech 3WT9.8,CISO,9.8
+,,Altwind1WT28.84,CISO,28.84
+,50386,ANTELOPE QFS1WT9.49,CISO,9.49
+,,Baja_California_Wind (Generic)WT495,CISO,495
+,,BIGLOW CANYON1WT50,CISO,50
+"Broadview Energy KW, LLC",60152,Broadview 11WT130,CISO,130
+"Broadview Energy JN, LLC",X60145,XBroadview 21WT167,CISO,167
+CTV Power Purchase Contract Trust,54300,Brookfield Tehachapi 31WT4.5,CISO,4.5
+Coram Tehachapi,54750,Brookfield Tehachapi 41WT6.52,CISO,6.52
+,50712,Buckwind Re-powering project1WT16.5,CISO,16.5
+Buena Vista Energy LLC,56446,"BUENA VISTA ENERGY, LLC1WT38",CISO,38
+Cabazon Wind Partners,56011,Cabazon Wind Project1WT41,CISO,41
+Cameron Ridge LLC,10586,Cameron Ridge1WT47.1,CISO,47.1
+Cameron Ridge LLC,10586,Cameron Ridge 21WT11.9,CISO,11.9
+,,Carrizo_Wind (Generic)WT187,CISO,187
+Coram Energy LLC (ECT),54298,CELLC 7.5 MW Tehachapi Project1WT7.5,CISO,7.5
+,,Central_Valley_North_Los_Banos_Wind (Generic)WT173,CISO,173
+Clines Corners Wind Farm LLC,64054,CLINES CORNERSWT129.94,PNM,129.94
+Clines Corners Wind Farm LLC,64054,CLINES CORNERS BWT194.28,PNM,194.28
+Clines Corners Wind Farm LLC,X64054,XCline Corners1WT342.22,PNM,342.22
+Coachella Hills Wind,64323,Coachella 1WT50.4,CISO,50.4
+Coachella Hills Wind,64323,Coachella 2WT10.8,CISO,10.8
+Brookfield Tehachapi 1,57962,Coram Brodie Wind Project1WT102,CISO,102
+Coram Energy LLC,54299,Coram Energy1WT3,CISO,3
+,,CSF Columbia Gorge1WT50,CISO,50
+Diablo Winds LLC,56271,DIABLO WINDS1WT18,CISO,18
+,,Dyer Summit Wind Repower1WT46.1,CISO,46.1
+East Winds Project,50820,Eastwind1WT3,CISO,3
+East Winds Project,50820,Edom Hills Wind Farm1WT19.55,CISO,19.55
+El Cabo Wind,X58098,XEl Cabo Wind1WT298,CISO,298
+,,El Cabo Wind PseudoWT269,CISO,269
+,,Energia Sierra Juarez Wind 2WT105,CISO,105
+,,ESJ Wind Energy1WT155.1,CISO,155.1
+GPS Cabazon Wind LLC,50552,FPL Energy C Wind1WT38.97,CISO,38.97
+FPL Energy Montezuma Winds LLC,57201,FPL Energy Montezuma Wind1WT36.8,CISO,36.8
+Summit Winds,64326,Frick Summit Wind RepowerWT10,CISO,10
+Green Power I,55396,GARNET GREEN POWER PROJECT AGGREGATE1WT16.5,CISO,16.5
+Garnet Wind Energy Center,57302,GARNET WIND ENERGY CENTER1WT6.5,CISO,6.5
+San Gorgonio Windplant WPP1993,54454,Garnet Winds Aggregation1WT22.5,CISO,22.5
+Golden Hills Wind,60049,Golden Hills A1WT42.96,CISO,42.96
+Golden Hills Wind,60049,Golden Hills B1WT42.96,CISO,42.96
+Golden Hills North Wind Energy Center,61222,Golden Hills C1WT46,CISO,46
+"Grady Wind Energy Center, LLC",X60317,XGrady Wind1WT200,CISO,200
+Hatchet Ridge Wind Project,56654,Hatchet Ridge Wind Farm1WT102,CISO,102
+High Winds LLC,56075,High Winds Energy Center1WT162,CISO,162
+,,Humboldt_Wind (Generic)WT34,CISO,34
+,,Iberdrola Centroid Sytem Resource1WT100,CISO,100
+Dinosaur Point,10005,International Turbine Research1WT18.4,CISO,18.4
+,,International Turbine ResearchWT18.4,CISO,18.4
+,,Invisable Generator Wind1WT25,CISO,25
+Karen Avenue Wind Farm,10718,Karen Avenue Wind Farm1WT11.7,CISO,11.7
+,,Kern_Greater_Carrizo_Wind (Generic)WT20,CISO,20
+Kumeyaay Wind,56295,Kumeyaay Wind Farm1WT50,CISO,50
+EDF Renewable Windfarm V Inc,54453,LaBrisa Wind Project1WT9,CISO,9
+Manzana Wind LLC,57484,Manzana Wind1WT189,CISO,189
+,,Milford 1 PseudoWT5,CISO,5
+Mojave 16/17/18,50821,Mojave 891WT82.65,CISO,82.65
+Mojave 3/4/5,52142,Mojave 901WT48.9,CISO,48.9
+TPC Windfarms LLC,54647,Morwind1WT38.16,CISO,38.16
+Mountain View IV,57459,Mountain View IV Wind1WT49,CISO,49
+Mountain View I&2,55719,Mountain View Power Project I1WT44.4,CISO,44.4
+Mountain View I&2,55719,Mountain View Power Project II1WT22.2,CISO,22.2
+Mountain View III,56112,Mountain View Power Project III1WT22.44,CISO,22.44
+,,Mulqueeney Ranch Wind 1WT20,CISO,20
+Mustang Hills LLC,57833,Mustang Hills1WT150,CISO,150
+,,NEWARK 1 QF1WT1.1,CISO,1.1
+Montezuma Wind II,57701,NextEra Energy Montezuma Wind II1WT78.2,CISO,78.2
+North Sky River Energy LLC,58154,North Sky River Wind Project1WT160,CISO,160
+,,Northern_California_Ex_WindWT98.8,CISO,98.8
+,,Northern_California_Ex_Wind (Generic)WT354,CISO,354
+,,Northern_California_Ex_Wind (Generic)WT178,CISO,178
+,,Northern_California_Ex_Wind (Generic)WT152,CISO,152
+,,Northern_California_Ex_Wind (Generic)WT83,CISO,83
+,,NW_Ext_Tx_Wind (Generic)WT530,CISO,530
+Oak Creek Energy Systems I,50754,Oak Creek1WT27.87,CISO,27.87
+Oasis Wind,56302,Oasis Power Plant1WT59,CISO,59
+,,Oasis Power Plant EastwindWT57.14,CISO,57.14
+Ocotillo Express LLC,57514,Ocotillo Wind Energy Facility1WT265,CISO,265
+Pacific Wind LLC,57757,Pacific Wind - Phase 11WT140,CISO,140
+Painted Hills Wind Park,50533,Painted Hills WindparkWT44.5,CISO,44.5
+San Gorgonio Westwinds II LLC,50690,Phoenix1WT11.2,CISO,11.2
+Pinyon Pine I,57834,Pinyon Pines 11WT168,CISO,168
+Pinyon Pine II,57837,Pinyon Pines 21WT132,CISO,132
+Point Wind,63482,Point Wind 1WT50.1,CISO,50.1
+Point Wind,63482,Point Wind 2WT14.4,CISO,14.4
+,,Renwind re-powering project1WT10,CISO,10
+Ridgetop Energy LLC,10597,Ridgetop 21WT27.39,CISO,27.39
+Ridgetop,54931,Ridgetop I1WT38.24,CISO,38.24
+Rising Tree Wind Farm,57621,Rising Tree 11WT79.2,CISO,79.2
+Rising Tree Wind Farm II,59235,Rising Tree 21WT19.8,CISO,19.8
+Rising Tree Wind Farm III,59236,Rising Tree 31WT99,CISO,99
+,,San Gorgonio East1WT12.6,CISO,12.6
+San Gorgonio Farms Wind Farm,50281,San Gorgonio Farms Wind Farm1WT31,CISO,31
+Sand Hill C,63653,Sand Hill C1WT80.8,CISO,80.8
+Shiloh I Wind Project,56362,Shiloh I Wind Project1WT150,CISO,150
+Shiloh III Wind Project LLC,57586,"Shiloh III Wind Project, LLC1WT102.5",CISO,102.5
+Shiloh IV Wind Project LLC,57725,Shiloh IV Wind Project1WT100,CISO,100
+Shiloh Wind Project 2 LLC,56874,SHILOH WIND PROJECT 21WT150,CISO,150
+Sky River Wind Energy Center,50536,Sky River Wind Repower AWT29,CISO,29
+Sky River Wind Energy Center,50536,Sky River Wind Repower BWT29.5,CISO,29.5
+Solano Wind,7526,SOLANO WIND FARMWT102.18,CISO,102.18
+Solano Wind,7526,SOLANO WIND FARMWT102.18,CISO,102.18
+Solano Wind,7526,SOLANO WIND FARMWT102.18,CISO,102.18
+Solano Wind,7526,Solano Wind Project Phase 3WT127.8,CISO,127.8
+,,Solano_Wind (Generic)WT194,CISO,194
+,,Solano_Wind (Generic)WT146,CISO,146
+,,Solano_Wind (Generic)WT72,CISO,72
+,,Solano_Wind (Generic)WT30,CISO,30
+,,Solano_Wind (Generic)WT20,CISO,20
+Strauss Wind Farm,62113,Strauss Wind Energy Project1WT99,CISO,99
+,,Tehachapi_Wind (Generic)WT275,CISO,275
+Dillon Wind LLC,56791,TIFFNY_1_DILLON1WT45,CISO,45
+Tule Wind LLC,57913,Tule Wind1WT127.6,CISO,127.6
+Vasco Winds,57700,Vasco Wind1WT78.2,CISO,78.2
+Voyager Wind I,60594,Voyager Wind 11WT128,CISO,128
+Voyager Wind II,61582,Voyager Wind 21WT128.7,CISO,128.7
+Voyager Wind III,61583,Voyager Wind 31WT43.2,CISO,43.2
+Voyager Wind IV,61584,Voyager Wind 41WT21.6,CISO,21.6
+Oasis Alta,63941,Voyager Wind Oasis AltaWT14.4,CISO,14.4
+Wagner Wind LLC,58233,Wagner Wind1WT6,CISO,6
+Mohave County Wind Farm,63114,White Hills A1WT50,CISO,50
+Mohave County Wind Farm,63114,White Hills B1WT300,CISO,300
+Whitewater Hill Wind Partners,56012,Whitewater Hill Wind ProjectWT61.5,CISO,61.5
+Tehachapi Wind Resource I,10191,Wind Resource I1WT9,CISO,9
+Tehachapi Wind Resource II,54909,Wind Resource II1WT19.95,CISO,19.95
+85 A,52162,Wind Wall Monolith 11WT19.85,CISO,19.85
+85 B,52163,Wind Wall Monolith 21WT23.66,CISO,23.66
+Windstar 1,57774,Windstar1WT120,CISO,120
+Victory Garden (Tehachapi),50532,Windstream 391WT3.35,CISO,3.35
+Victory Garden (Tehachapi),50532,Windstream 60401WT4.07,CISO,4.07
+Victory Garden (Tehachapi),50532,Windstream 60411WT3.86,CISO,3.86
+Victory Garden (Tehachapi),50532,Windstream 60421WT6.77,CISO,6.77
+Victory Garden (Tehachapi),50532,Windstream 61111WT6.31,CISO,6.31
+,,Windustries1WT9.8,CISO,9.8
+,,"Wintec Energy, Ltd.1WT1.32",CISO,1.32
+Wintec Energy Ltd,50276,WINTEC PALMWT5.93,CISO,5.93
+,,Wyoming_Wind (Generic)WT1062,CISO,1062
+Zephyr Wind,60128,Zephyr Park1WT3.5,CISO,3.5
+Zephyr Wind,60128,Zephyr Park1WT3.5,CISO,3.5
+Zephyr Wind,60128,Zephyr Park1WT3.5,CISO,3.5
+,50534,ZOND WINDSYSTEMS INC.1WT17.1,CISO,17.1
+"Grady Wind Energy Center, LLC",X60317,XPattern Operators. LP1WT220,GRDY,220
+"Grady Wind Energy Center, LLC",60317,Pattern Operators. LP1WT220,GRID,220
+"Broadview Energy JN, LLC",60145,Pattern Operators. LP1WT182,GRID,182
+"Broadview Energy KW, LLC",60152,Pattern Operators. LP1WT143,GRID,143
+NaturEner Glacier Wind Energy 1,57049,Glacier Winds Energy One71WT106.5,GWA,106.5
+NaturEner Glacier Wind Energy 2,57050,Glacier Winds Energy Two69WT103.5,GWA,103.5
+Bennett Creek Windfarm LLC - Mountain Home,56637,Bennett Creek1WT21,IPCO,21
+Benson Creek Windfarm (Burnt River),59491,Benson Creek Wind (OR)1WT10,IPCO,10
+Burley Butte Windpark,56434,Burley Butte1WT21.3,IPCO,21.3
+Camp Reed,57125,Camp Reed Wind1WT22.5,IPCO,22.5
+Cassia Wind,56934,Cassia Wind Farm1WT10.5,IPCO,10.5
+Cold Springs Windfarm,57431,Cold Springs Windfarm1WT23,IPCO,23
+Desert Meadow Windfarm,57430,Desert Meadow Windfarm1WT23,IPCO,23
+Durbin Creek Windfarm (Burnt River),59492,Durbin Creek Wind (OR)1WT10,IPCO,10
+Elkhorn Valley Wind Farm,56623,Elkhorn Wind1WT100,IPCO,100
+Fossil Gulch,56308,Fossil Gulch1WT10.5,IPCO,10.5
+Golden Valley Wind Park LLC,56435,Golden Valley1WT12,IPCO,12
+Hammett Hill Windfarm,57428,Hammett Hill Windfarm1WT23,IPCO,23
+High Mesa,58019,High Mesa1WT40,IPCO,40
+Mountain Home,56636,Hot Springs1WT21,IPCO,21
+,,IRP Planned Generic New ResourceWT400,IPCO,400
+,,IRP Planned Generic New ResourceWT300,IPCO,300
+Jett Creek Windfarm (Burnt River),59490,Jett Creek Wind (OR)1WT10,IPCO,10
+Lime Wind,57803,Lime Wind Energy1WT3,IPCO,3
+Mainline Windfarm,57429,Mainline Windfarm1WT23,IPCO,23
+Milner Dam Wind Park LLC,56437,Milner Dam1WT19.92,IPCO,19.92
+Oregon Trail Wind Park,56439,Oregon Trails1WT13.5,IPCO,13.5
+Payne's Ferry,57124,Paynes Ferry Wind Farm1WT21,IPCO,21
+Pilgrim Stage Wind Park,56440,Pilgrim Stage1WT10.5,IPCO,10.5
+Prospector Windfarm (Burnt River),59493,Prospector Wind (OR)1WT10,IPCO,10
+Rockland Wind Farm,57766,Rockland44WT80,IPCO,80
+Ryegrass Windfarm,57427,Ryegrass Windfarm1WT23,IPCO,23
+Salmon Falls Wind Park,56441,Salmon Falls1WT22,IPCO,22
+Sawtooth Wind Project,57749,Sawtooth Wind1WT22,IPCO,22
+Thousand Springs Wind Park,56442,Thousand Springs1WT12,IPCO,12
+Tuana Gulch Wind Park,56443,Tuana Gulch1WT10.5,IPCO,10.5
+Tuana Springs,57136,Tuana Springs1WT35.7,IPCO,35.7
+Two Ponds Windfarm,57444,Two Ponds Windfarm1WT23,IPCO,23
+Willow Spring Windfarm (Burnt River),59494,Willow Spring Windfarm (OR)1WT10,IPCO,10
+Yahoo Creek,57126,Yahoo Creek Wind Farm1WT21,IPCO,21
+Milford Wind Corridor I LLC,57079,Milford Phase I Wind97WT185,LDWP,185
+Milford Wind Corridor Stage II LLC,57107,Milford Phase II Wind68WT102,LDWP,102
+Pine Tree Wind Power Project,56433,Pine Tree90WT135,LDWP,135
+Red Cloud Wind LLC,X63981,XRed Cloud Wind124WT331,LDWP,331
+,,Wind-Pine Canyon1WT120,LDWP,120
+Spring Valley Wind Project,57192,Spring Valley 11WT149,NEVP,149
+South Peak Wind,62939,South Peak Wind1WT86.9,NWMT,86.9
+Big Timber Wind Farm,61155,Big Timber Wind1WT25,NWMT,25
+Fairfield Wind,58966,Fairfield Wind1WT10,NWMT,10
+Gordon Butte Wind LLC,57748,Gordon Butte Wind1WT9.59,NWMT,9.59
+Greenfield Wind - MT,60486,Greenfield Wind1WT25,NWMT,25
+Horseshoe Bend Wind Park,56591,Horseshoe Bend1WT9,NWMT,9
+Horseshoe Bend Wind Park,56591,Horseshoe Bend6WT9,NWMT,9
+Judith Gap Wind Energy Center,56377,Judith Gap90WT135,NWMT,135
+,,Misc. Wind1WT5,NWMT,5
+Musselshell Wind Project,57963,Musselshell Wind1WT10,NWMT,10
+Musselshell Wind Project Two LLC,57965,Musselshell Wind Two1WT10,NWMT,10
+Spion Kop Wind Farm,58218,Spion Kop Wind1WT40,NWMT,40
+"Stillwater Wind, LLC",61858,Stillwater Wind1WT80,NWMT,80
+Two Dot Wind Farm,59003,Two Dot Wind Farm1WT9.69,NWMT,9.69
+Casper Wind Farm,57093,Casper WindCWGTWT17,PACE,17
+Cedar Springs II,63915,"Cedar Springs Transmission, LLC (BTA)72WT198.88",PACE,198.88
+Cedar Springs I,63914,Cedar Springs Wind / NextEra0WT200.1,PACE,200.1
+Cedar Springs III,63916,"Cedar Springs Wind III, LLC/ NextEra0WT133.3",PACE,133.3
+Dunlap,57299,Dunlap Ranch74WT129.5,PACE,129.5
+Ekola Flats,62591,Ekola Flats Wind0WT250.9,PACE,250.9
+Foote Creek I,55607,Foote Creek 168WT48,PACE,48
+,55608,Foote Creek 23WT1.8,PACE,1.8
+,55609,Foote Creek 333WT24.5,PACE,24.5
+,55610,Foote Creek 428WT16.8,PACE,16.8
+Glenrock,56841,Glenrock 158WT113.6,PACE,113.6
+Glenrock,56841,Glenrock 320WT44.1,PACE,44.1
+Goshen Phase II,57211,Goshn II/Jolly Hills83WT124.5,PACE,124.5
+High Plains,57040,High Plains66WT115.5,PACE,115.5
+,,Horse Butte Phase II1WT42.4,PACE,42.4
+"Horse Butte Wind I, LLC",57890,Horse Butte Wind I1WT57.6,PACE,57.6
+Latigo Wind Park,59965,Latigo Wind1WT60,PACE,60
+McFadden Ridge,57039,McFadden Ridge19WT33.25,PACE,33.25
+Meadow Creek Project Company,58106,Meadow Creek Project Company - Five Pine1WT39.9,PACE,39.9
+Meadow Creek Project Company,58106,Meadow Creek Project Company - North Point1WT79.8,PACE,79.8
+Mountain Wind Power LLC,56752,Mountain Wind I / Mountain Wind 129WT60.9,PACE,60.9
+Mountain Wind Power II LLC,56753,Mountain Wind II / Mountain Wind 238WT79.8,PACE,79.8
+"Pioneer Wind Park, LLC",60259,Pioneer Wind Park I LLC1WT80,PACE,80
+TransAlta Wyoming Wind,56093,Pleasant Valley (TransAlta Wyoming Wind)80WT144,PACE,144
+Power County Wind Park North,57761,Power County Wind Park North9WT22.5,PACE,22.5
+Power County Wind Park South,57760,Power County Wind Park South9WT22.5,PACE,22.5
+Pryor Mountain Wind,59757,Pryor Mountain Wind1-114WT239.8,PACE,239.8
+Rock River I LLC,55740,Rock River I50WT49,PACE,49
+Rolling Hills,56842,Rolling Hills66WT111,PACE,111
+Seven Mile Hill,56843,Sevenmile Hill 148WT115.6,PACE,115.6
+Seven Mile Hill,56843,Sevenmile Hill 213WT33.25,PACE,33.25
+Spanish Fork Wind Park 2 LLC,56751,Spanish Fork Wind Park 29WT18.9,PACE,18.9
+TB Flats,62516,TB Flats Wind I0WT307.5,PACE,307.5
+TB Flats,62516,TB Flats Wind II0WT195.7,PACE,195.7
+Campbell Hill Windpower,57090,Three Buttes Windpower / Campbell Hill66WT99,PACE,99
+Tooele Army Depot(CSG),59817,Tooele Army Depot (Wind 1)1WT1.5,PACE,1.5
+Tooele Army Depot(CSG),59817,Tooele Army Depot (Wind 2)2WT1.7,PACE,1.7
+Top of the World Windpower Project,57327,Top of the World Wind LLC (Duke)110WT200.2,PACE,200.2
+,,"Wind + Storage, Goshen0WT60.4",PACE,60.4
+,,"Wind, GO0WT1039.6",PACE,1039.6
+,,"Wind, Goshen0WT151",PACE,151
+,,"Wind, UT0WT69.2",PACE,69.2
+,,"Wind, WYAE #10WT600",PACE,600
+,,"Wind, WYAE #20WT75",PACE,75
+,,"Wind, WYAE #30WT109",PACE,109
+,,"Wind, WYAE #40WT420",PACE,420
+,,"Wind, WYAE #50WT80",PACE,80
+,,"Wind, WYAE #60WT208",PACE,208
+,,"Wind, WYAE #70WT173",PACE,173
+,,"Wind, WYAE #80WT75",PACE,75
+,,"Wind, WYAE #90WT180",PACE,180
+,,"Wind, Wyoming East0WT1641",PACE,1641
+,,"Wind, Wyoming East0WT489",PACE,489
+,,"Wind, Wyoming East0WT49",PACE,49
+,,"Wind, Wyoming East0WT43.4",PACE,43.4
+Wolverine Creek,56301,Wolverine Creek43WT64.5,PACE,64.5
+Big Top LLC,56968,"Big Top, LLC (Oregon Windfarms1WT1.65",PACW,1.65
+Butter Creek Power LLC,56967,Butter Creek Power LLC (Oregon Windfarms LLC)1WT4.95,PACW,4.95
+Chopin Wind LLC,59076,"Chopin Wind, LLC0WT10",PACW,10
+Combine Hills I,56195,Combine Hills 141WT41,PACW,41
+Four Corners Windfarm LLC,56969,Four Corners Windfarm LLC (Oregon Windfarms LLC)1WT10,PACW,10
+Four Mile Canyon Windfarm LLC,56970,Four Mile Canyon Windfarm LLC (Oregon Windfarms LLC)1WT10,PACW,10
+FPL Energy Vansycle LLC (WA),55560,FPL Energy Vansycle LLC (WA)186WT176.9,PACW,176.9
+Goodnoe Hills,56666,Goodnoe Hills1-47WT103.4,PACW,103.4
+Leaning Juniper,56360,Leaning Juniper1-67WT107.36,PACW,107.36
+Marengo Wind Plant,56466,Marengo 11-78WT156,PACW,156
+Marengo Wind Plant,56466,Marengo 279-117WT78,PACW,78
+"Orchard Windfarm 1, LLC",62935,"Orchard Wind Farm 1, LLC5WT10",PACW,10
+"Orchard Windfarm 3, LLC",64052,"Orchard Wind Farm 2, LLC5WT10",PACW,10
+"Orchard Windfarm 2, LLC",64051,"Orchard Wind Farm 3, LLC5WT10",PACW,10
+"Orchard Windfarm 4, LLC",64053,"Orchard Wind Farm 4, LLC5WT10",PACW,10
+Oregon Trail Windfarm LLC,56971,Oregon Trail Windfarm LLC (Oregon Windfarms LLC)1WT9.9,PACW,9.9
+Pacific Canyon Windfarm LLC,56972,Pacific Canyon Windfarm LLC (Oregon Windfarms LLC)1WT8.25,PACW,8.25
+Sand Ranch Windfarm LLC,56973,Sand Ranch Windfarm LLC (Oregon Windfarms LLC)1WT9.9,PACW,9.9
+Threemile Canyon,56933,Threemile Canyon Wind I LLC1WT9.9,PACW,9.9
+,,Utility Wind - Portland North Coast1WT450,PACW,450
+,,Utility Wind - Portland North Coast1WT130,PACW,130
+,,Utility Wind - Willamette Valley1WT615,PACW,615
+,,Utility Wind+Storage - Yakima1WT160,PACW,160
+,,Utility Wind+Storage - Yakima1WT9.8,PACW,9.8
+Vansycle II Wind Energy Center,58324,Vansycle II Wind Energy Center43WT98.9,PACW,98.9
+Wagon Trail LLC,56974,Wagon Trail LLC (Oregon Windfarms LLC)1WT3.3,PACW,3.3
+Ward Butte Windfarm LLC,56975,Ward Butte Windfarm LLC (Oregon Windfarms LLC)1WT6.6,PACW,6.6
+Biglow Canyon Wind Farm,56485,Biglow Canyon 176WT125.4,PGE,125.4
+Biglow Canyon Wind Farm,56485,Biglow Canyon 276WT174.8,PGE,174.8
+Biglow Canyon Wind Farm,56485,Biglow Canyon 365WT149.5,PGE,149.5
+Tucannon River Wind Farm,58571,Tucannon River Wind116WT267,PGE,267
+Wheatridge 1,64057,Wheatridge40WT100,PGE,100
+Aragonne Wind LLC,X56336,XArgonne Mesa1WT90,PNM,90
+Casa Mesa Wind Energy Center Hybrid,61925,Casa Mesa Wind1WT50,PNM,50
+Duran Mesa LLC,64065,Duran Mesa1WT105.08,PNM,105.08
+El Cabo Wind,58098,El Cabo Wind1WT298.2,PNM,298.2
+High Lonesome Mesa LLC,56945,High Lonesome Mesa Wind Farm1WT100,PNM,100
+La Joya NM,61044,La Joya1WT166,PNM,166
+La Joya NM,61044,La Joya2WT141,PNM,141
+New Mexico Wind Energy Center,56097,New Mexico Wind Energy Center1WT204,PNM,204
+Red Cloud Wind LLC,63981,Red Cloud1WT349.68,PNM,349.68
+Red Mesa Wind LLC,57357,Red Mesa1WT102.4,PNM,102.4
+Tecolote Wind LLC,64066,Tecolte1WT271.68,PNM,271.68
+,,Arriba Wind Project1WT100,PSCO,100
+"Bronco Plains Wind, LLC",63803,Bronco Plains1WT299.36,PSCO,299.36
+Busch Ranch II Wind Farm,62445,Busch Ranch Ph 2 Wind Generation2WT59.4,PSCO,59.4
+Busch Ranch Wind Energy Farm,57980,Busch Ranch Wind Generation1WT29,PSCO,29
+Cedar Creek Wind,56371,Cedar Creek1WT300.5,PSCO,300.5
+Cedar Creek Wind,56371,Cedar Creek1WT300.5,PSCO,300.5
+Cedar Creek II,57210,Cedar Creek II Wind2WT250.8,PSCO,250.8
+Cedar Point Wind,57315,Cedar Point1WT252,PSCO,252
+Cheyenne Ridge Wind Farm,62952,Cheyenne Ridge1WT500,PSCO,500
+Colorado Green Holdings LLC,56173,Colorado Green1WT162,PSCO,162
+Golden West Power Partners LLC,59974,Golden West1WT249.4,PSCO,249.4
+Huerfano River Wind,58548,Huerfano River Wind1WT8,PSCO,8
+Huerfano River Wind,58548,Huerfano River Wind1WT8,PSCO,8
+Huerfano River Wind,58548,Huerfano River Wind1WT8,PSCO,8
+Huerfano River Wind,58548,Huerfano River Wind1WT8,PSCO,8
+Lamar Plant,508,Lamar4WT4.5,PSCO,4.5
+Lamar Plant,508,Lamar1WT1.5,PSCO,1.5
+Limon Wind I,58126,Limon I1WT200,PSCO,200
+Limon Wind II,58127,Limon II1WT200,PSCO,200
+Limon III Wind LLC,59083,Limon III1WT200.6,PSCO,200.6
+Logan Wind Energy,56613,Logan County1WT201,PSCO,201
+Medicine Bow,692,Medicine BowMB1WT6.27,PSCO,6.27
+Medicine Bow,692,Medicine BowMB1WT6.27,PSCO,6.27
+"Mountain Breeze Wind, LLC",62840,Mountain Breeze1WT171.72,PSCO,171.72
+Northern Colorado Wind LLC,57290,Northern Colorado Wind1WT151.8,PSCO,151.8
+Northern Colorado Wind LLC,57290,Northern Colorado Wind II2WT22.5,PSCO,22.5
+,57693,NREL NWTC Wind1WT4,PSCO,4
+,57693,NREL NWTC Wind2WT2.3,PSCO,2.3
+,57693,NREL NWTC Wind4WT2,PSCO,2
+Peak View Wind Farm,60143,Peak View Wind Generation1WT60.8,PSCO,60.8
+Peetz Table Wind Energy,56563,Peetz Table1WT199.5,PSCO,199.5
+Ridge Crest Wind Partners,55741,Ridge Crest1WT29.69,PSCO,29.69
+Roundhouse Wind Energy Project,63133,Roundhouse1WT225,PSCO,225
+Roundhouse Wind Energy Project,63133,Roundhouse1WT225,PSCO,225
+Roundhouse Wind Energy Project,63133,Roundhouse1WT225,PSCO,225
+Rush Creek Wind,60619,Rush Creek I1WT400,PSCO,400
+Rush Creek Wind,60619,Rush Creek II1WT200,PSCO,200
+Spring Canyon,56320,Spring Canyon1WT60,PSCO,60
+Spring Canyon Expansion Wind Energy Ctr,58769,Spring Canyon2WT32,PSCO,32
+Spring Canyon Expansion Wind Energy Ctr,58769,Spring Canyon3WT28,PSCO,28
+,,Springfield1WT1.5,PSCO,1.5
+Twin Buttes Wind Project,56460,Twin Buttes1WT75,PSCO,75
+Twin Buttes II Wind,61040,Twin Buttes2WT75,PSCO,75
+Skookumchuck Wind Facility,X63205,XThurston Wind1WT152,PSEI,152
+Vantage Wind Energy LLC,57188,Vantage Wind1WT96,PSEI,96
+Wild Horse,56322,Wild Horse1WT228.59,PSEI,228.59
+Wild Horse,56322,Wild Horse Expansion1WT44,PSEI,44
+Babbitt Ranch Energy Center,66110,Babbit Ranch1WT161,SRP,161
+"Poseidon Wind, LLC",57379,Dry Lake E1WT63,SRP,63
+Dry Lake Wind LLC,57098,Dry Lake W1WT64,SRP,64
+"Borderlands Wind, LLC",64638,Borderlands Wind NextEra1WT99.01,TEPC,99.01
+Kingman 1,57775,Kingman Wind1WT10,TEPC,10
+Macho Springs Power I,57947,Macho Springs1WT50.4,TEPC,50.4
+Oso Grande Wind Farm,63502,Oso Grande Wind1WT247.4,TEPC,247.4
+Oso Grande Wind Farm,63502,Oso Grande Wind1WT247.4,TEPC,247.4
+Red Horse 2,58833,Red Horse Wind 2    (WIND)1WT30,TEPC,30
+Carousel Wind Farm LLC,59975,Carousel1WT150,WACM,150
+Colorado Highlands Wind,57174,Colorado Highlands Wind42WT91,WACM,91
+Colorado Highlands Wind,57174,Colorado Highlands Wind42WT91,WACM,91
+Corriedale Wind Energy,63436,Corriedale1WT52.5,WACM,52.5
+Crossing Trails Wind Power Project LLC.,62489,Crossing Trails Wind Farm1WT104,WACM,104
+Happy Jack Windpower Project,56960,Happy Jack1WT29.39,WACM,29.39
+Kimball Wind,56106,Kimball Wind Farm1WT30,WACM,30
+Kit Carson Windpower,57244,Kit Carson Wind Farm1WT51,WACM,51
+Silver Sage Windpower,57091,Silver Sage1WT42,WACM,42
+,,Warren AF Wind1WT1,WACM,1
+,,2021-G61WT135,WALC,135
+NaturEner Rim Rock Energy,57995,Rim Rock126WT189,WWA,189
+,,Fuerza EÃ³lica San Matias1WT30,CFE,30
+,,Parque Eolico Rumorosa5WT10,CFE,10
+,,Milford I1WT5,CISO,5
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
