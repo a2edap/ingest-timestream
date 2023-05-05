@@ -3,7 +3,7 @@ import re
 from pathlib import Path
 from typing import Dict, List, Pattern
 
-from tsdat import PipelineConfig, read_yaml
+from .timestream import TimestreamPipeline, read_yaml
 
 logger = logging.getLogger(__name__)
 
@@ -55,8 +55,7 @@ class PipelineRegistry:
                 skipped += 1
             else:
                 for config_file in config_files:
-                    config = PipelineConfig.from_yaml(config_file)
-                    pipeline = config.instantiate_pipeline()
+                    pipeline = TimestreamPipeline.from_config(config_file)
                     inputs = input_keys if clump else [input_key]
                     logger.debug(
                         "Running pipeline %s on input %s",
