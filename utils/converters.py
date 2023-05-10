@@ -1,15 +1,16 @@
 from pathlib import Path
 from typing import Any, List, Optional, Union
 
+import xarray as xr
 
-def from_netcdf(
+def from_netcdf_to_csv(
     filepath: Union[Path, str],
-    variable: List[str],
+    variables: List[str],
     **kwargs: Optional[Any],
 ) -> Path:
-    from ncconvert import to_csv
+    from ncconvert.csv import to_csv
 
-    # TODO: open file and wrap to_csv call
-    # to_csv()
-
-    return Path()
+    ds = xr.open_dataset(filepath)
+    ds = ds[variables]
+    output_filepath, _ = to_csv(ds, filepath=filepath, metadata=False) 
+    return output_filepath

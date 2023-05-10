@@ -34,7 +34,7 @@ class Converter(Protocol):
     def __call__(
         self,
         filepath: Union[Path, str],
-        variable: List[str],
+        variables: List[str],
         **kwargs: Optional[Any],
     ) -> Union[Tuple[Path, ...], Path]:
         ...
