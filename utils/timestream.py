@@ -65,6 +65,18 @@ class TimestreamPipeline:
     def from_config(cls, config_file: Path):
         # TODO: Instantiate the class from the config file
         # return cls(...)
+        with open(config_file, "r") as file:
+            config = yaml.safe_load(file)
+
+            triggers = config.get("triggers", [])
+            inputs = config.get("inputs", {})
+            outputs = config.get("outputs", {})
+            reader = inputs.get("reader", "")
+            variables = inputs.get("variables", [])
+            bucket_name = outputs.get("bucket_name", "")
+            storage_root = outputs.get("storage_root", "")
+
+            return cls(triggers, reader, variables, bucket_name, storage_root)
         ...
 
     def run(self, inputs: List[str]) -> None:
