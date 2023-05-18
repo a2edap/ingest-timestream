@@ -1,4 +1,5 @@
 from pathlib import Path
+import tempfile
 from typing import Any, Dict, List, Optional, Pattern, Protocol, Tuple, Union
 
 import yaml
@@ -35,6 +36,7 @@ class Converter(Protocol):
         self,
         filepath: Union[Path, str],
         variables: List[str],
+        directory: Optional[Union[Path, str]] = None,
         **kwargs: Optional[Any],
     ) -> Union[Tuple[Path, ...], Path]:
         ...
@@ -48,15 +50,16 @@ class TimestreamPipeline:
     def __init__(
         self,
         triggers: List[Pattern[str]],
-        reader: Converter,
+        converter: Converter,
         variables: List[str],
         bucket_name: str,
         storage_root: str,
     ) -> None:
         self.triggers = triggers
-        self.reader = reader
-        # and so on...
-        ...
+        self.converter = converter
+        self.variables = variables
+        self.bucket_name = bucket_name
+        self.storage_root = storage_root
 
     def __repr_name__(self) -> str:
         return type(self).__name__
@@ -65,20 +68,44 @@ class TimestreamPipeline:
     def from_config(cls, config_file: Path):
         # TODO: Instantiate the class from the config file
         # return cls(...)
-        with open(config_file, "r") as file:
-            config = yaml.safe_load(file)
+        config = read_yaml(config_file)
 
-            triggers = config.get("triggers", [])
-            inputs = config.get("inputs", {})
-            outputs = config.get("outputs", {})
-            reader = inputs.get("reader", "")
-            variables = inputs.get("variables", [])
-            bucket_name = outputs.get("bucket_name", "")
-            storage_root = outputs.get("storage_root", "")
+        triggers = config.get("triggers", [])
+        inputs = config.get("inputs", {})
+        outputs = config.get("outputs", {})
+        converter = inputs.get("converter", "")
+        variables = inputs.get("variables", [])
+        bucket_name = outputs.get("bucket_name", "")
+        storage_root = outputs.get("storage_root", "")
 
-            return cls(triggers, reader, variables, bucket_name, storage_root)
-        ...
+        converter = import_string(converter)
+
+        return cls(triggers, converter, variables, bucket_name, storage_root)
 
     def run(self, inputs: List[str]) -> None:
         # TODO: Call converter method and upload output(s) to correct location in S3
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            # TODO: Use template to calculate standard_fpath
+            # TODO: Calculate substitutions
+            # TODO: date and time should be current date and time.
+            for input in inputs:
+                tmp_filepath = Path(tmp_dir) / standard_fpath
+                tmp_filepath.parent.mkdir(parents=True, exist_ok=True)
+                self.converter(input, self.variables, directory=self.storage_root)
+
+            for filepath in Path(tmp_dir).glob("**/*"):
+                if filepath.is_dir():
+                    continue
+                s3_filepath = filepath.relative_to(tmp_dir).as_posix()
+                # TODO: add self._bucket (boto3)
+                self._bucket.upload_file(Filename=filepath.as_posix(), Key=s3_filepath)
+                # TODO:
+                # logger.info(
+                #     "Saved %s data file to s3://%s/%s",
+                #     datastream,
+                #     self.parameters.bucket,
+                #     s3_filepath,
+                # )
+
         ...

@@ -2,7 +2,7 @@
 triggers: [.*z06.*\.csv, .*z06.*\.csv]
 
 inputs:
-  reader: pipelines.example_pipeline.pipeline.ExamplePipeline
+  converter: utils.converters.from_netcdf_to_csv
   variables:
     - time
     - wind_speed
