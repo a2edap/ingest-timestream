@@ -1,10 +1,11 @@
-# {sa1.met.z01.b0}.{20221001}.{190000}.nc
-triggers: [.*z06.*\.csv, .*z06.*\.csv]
+# s3://tsdat-prod/storage/root/awaken/data/sa1.met_z01.b0/sa1.met_z01.b0.20221001.190000.nc
+triggers:
+  - .*/awaken/.*\.met.*z.*/.*\.nc
 
 inputs:
   converter: utils.converters.from_netcdf_to_csv
   variables:
-    - time
+    # - time
     - wind_speed
     - wind_direction
 

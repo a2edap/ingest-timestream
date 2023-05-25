@@ -1,4 +1,6 @@
-ncconvert[cli]>=0.1.2
+ncconvert>=0.1.3
 xarray
 pandas
 boto3
+pyyaml
+typer

@@ -5,6 +5,23 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Debug ingest-timestream",
+            "type": "python",
+            "request": "launch",
+            "program": "runner.py",
+            "console": "integratedTerminal",
+            "args": [
+                "data/awaken/sa1.met_z01.b0/sa1.met_z01.b0.20221001.190000.nc"
+            ],
+            "justMyCode": true,
+            "env": {
+                // You will need to set these environment variables to use boto3 to upload the output data
+                "AWS_ACCESS_KEY_ID": "",
+                "AWS_SECRET_ACCESS_KEY": "",
+                "AWS_SESSION_TOKEN": ""
+            }
+        },
+        {
             "name": "Python: Current File",
             "type": "python",
             "request": "launch",
@@ -22,6 +39,6 @@
             "program": "${file}",
             "justMyCode": false,
             "console": "integratedTerminal",
-        }
+        },
     ]
 }

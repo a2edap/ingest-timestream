@@ -7,7 +7,19 @@ import re
 import tempfile
 from pathlib import Path
 import time
-from typing import Any, Dict, List, Optional, Pattern, Protocol, Tuple, Union, Callable, Mapping, Match
+from typing import (
+    Any,
+    Dict,
+    List,
+    Optional,
+    Pattern,
+    Protocol,
+    Tuple,
+    Union,
+    Callable,
+    Mapping,
+    Match,
+)
 
 import yaml
 import boto3
@@ -37,7 +49,6 @@ def import_string(dotted_path: str) -> Any:
         raise ImportError(
             f'Module "{module_path}" does not define a "{class_name}" attribute'
         ) from e
-
 
 
 _SQUARE_BRACKET_REGEX = r"\[(.*?)\]"
@@ -140,7 +151,7 @@ class Template:
 
         Returns:
             str: The template string with the appropriate substitutions made.
-    """
+        """
         # return _substitute(self.template, mapping, allow_missing, **kwds)
         if mapping is None:
             mapping = {}
@@ -155,7 +166,9 @@ class Template:
             if allow_missing and res is None:
                 res = match.group(0)
             elif res is None:
-                raise ValueError(f"Substitution cannot be made for key '{match.group(1)}'")
+                raise ValueError(
+                    f"Substitution cannot be made for key '{match.group(1)}'"
+                )
             return res
 
         def _sub_square(match: Match[str]) -> str:
@@ -173,12 +186,12 @@ class Template:
         return resolved
 
 
-
 class Converter(Protocol):
     def __call__(
         self,
         filepath: Union[Path, str],
         variables: List[str],
+        location: str,
         directory: Optional[Union[Path, str]] = None,
         **kwargs: Optional[Any],
     ) -> Union[Tuple[Path, ...], Path]:
@@ -188,6 +201,7 @@ class Converter(Protocol):
 # This class should retain all of the parameters defined in the pipeline config
 # and make them easily accessible for future use. We also must implement the run
 # method such that
+
 
 class TimestreamPipeline:
     def __init__(
@@ -208,20 +222,17 @@ class TimestreamPipeline:
 
     def __repr_name__(self) -> str:
         return type(self).__name__
-    
+
     @property
     def _session(self):
-        return self._get_session(
-            region="us-west-2", timehash=self._get_timehash()
-        )
+        return self._get_session(region="us-west-2", timehash=self._get_timehash())
 
     @staticmethod
     def _get_timehash(seconds: int = 3600) -> int:
         return round(time.time() / seconds)
 
-    
-    @lru_cache()
     @staticmethod
+    @lru_cache()
     def _get_session(region: str, timehash: int = 0):
         """------------------------------------------------------------------------------------
         Creates a boto3 Session or returns an active one.
@@ -236,7 +247,8 @@ class TimestreamPipeline:
         Returns:
             boto3.session.Session: An active boto3 Session object.
 
-        ------------------------------------------------------------------------------------"""
+        ------------------------------------------------------------------------------------
+        """
         del timehash
         return boto3.session.Session(region_name=region)
 
@@ -248,16 +260,13 @@ class TimestreamPipeline:
     @classmethod
     def from_config(cls, config_file: Path):
         config = read_yaml(config_file)
-        
+
         triggers = config.get("triggers", [])
         inputs = config.get("inputs", {})
         outputs = config.get("outputs", {})
         converter = inputs.get("converter", "")
         variables = inputs.get("variables", [])
-        bucket_name = outputs.get(
-            "bucket_name",
-            os.getenv("TSDAT_S3_BUCKET_NAME", "")    
-        )
+        bucket_name = outputs.get("bucket_name", os.getenv("TSDAT_S3_BUCKET_NAME", ""))
         storage_root = Template(outputs.get("storage_root", ""))
 
         converter = import_string(converter)
@@ -267,31 +276,35 @@ class TimestreamPipeline:
             converter=converter,
             variables=variables,
             bucket_name=bucket_name,
-            storage_root=storage_root
+            storage_root=storage_root,
         )
 
     def run(self, inputs: List[str]) -> None:
-
         date = datetime.date.today()
         time = datetime.datetime.now()
         with tempfile.TemporaryDirectory() as tmp_dir:
-
             for input_filepath in inputs:
-                storage_root = Path(tmp_dir) / Path(self.storage_root.substitute(
-                    date=date.strftime("%Y%m%d"),
-                    time=time.strftime("%H%M%S"),
-                    dataset=Path(input_filepath).parent.name,
-                ))
+                storage_root = Path(tmp_dir) / Path(
+                    self.storage_root.substitute(
+                        date=date.strftime("%Y%m%d"),
+                        time=time.strftime("%H%M%S"),
+                        dataset=Path(input_filepath).parent.name,
+                    )
+                )
                 storage_root.mkdir(parents=True, exist_ok=True)
-                self.converter(input_filepath, self.variables, directory=storage_root)
+                location = Path(input_filepath).name.split(".")[0]
+                self.converter(
+                    filepath=input_filepath,
+                    variables=self.variables,
+                    location=location,
+                    directory=storage_root,
+                )
 
             for filepath in Path(tmp_dir).glob("**/*"):
                 if filepath.is_dir():
                     continue
                 s3_filepath = filepath.relative_to(tmp_dir).as_posix()
-                # TODO: add self._bucket (boto3)
                 self._bucket.upload_file(Filename=filepath.as_posix(), Key=s3_filepath)
-                # TODO:
                 # logger.info(
                 #     "Saved %s data file to s3://%s/%s",
                 #     datastream,
