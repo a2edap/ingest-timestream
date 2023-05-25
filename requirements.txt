@@ -1,3 +1,4 @@
 ncconvert[cli]>=0.1.2
 xarray
 pandas
+boto3
