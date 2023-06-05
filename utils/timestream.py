@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 import datetime
 from functools import lru_cache
 
@@ -160,7 +161,7 @@ class Template:
         def _sub_curly(match: Match[str]) -> str:
             # group(1) returns string without {}, group(0) returns with {}
             # result is we only do replacements that we can actually do.
-            res = mapping.get(match.group(1))
+            res = mapping.get(match.group(1))  # type: ignore
             if callable(res):
                 res = res()
             if allow_missing and res is None:
@@ -172,8 +173,8 @@ class Template:
             return res
 
         def _sub_square(match: Match[str]) -> str:
-            # make curly substitutions inside of square brackets or remove the whole thing
-            # if substitutions cannot be made.
+            # make curly substitutions inside of square brackets or remove the whole
+            # thing if substitutions cannot be made.
             try:
                 resolved = re.sub(_CURLY_BRACKET_REGEX, _sub_curly, match.group(1))
                 return resolved if resolved != match.group(1) else ""
@@ -196,11 +197,6 @@ class Converter(Protocol):
         **kwargs: Optional[Any],
     ) -> Union[Tuple[Path, ...], Path]:
         ...
-
-
-# This class should retain all of the parameters defined in the pipeline config
-# and make them easily accessible for future use. We also must implement the run
-# method such that
 
 
 class TimestreamPipeline:
@@ -287,7 +283,7 @@ class TimestreamPipeline:
                 storage_root = Path(tmp_dir) / Path(
                     self.storage_root.substitute(
                         date=date.strftime("%Y%m%d"),
-                        time=time.strftime("%H%M%S"),
+                        time=time.strftime("%H0000"),
                         dataset=Path(input_filepath).parent.name,
                     )
                 )
