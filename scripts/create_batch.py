@@ -36,19 +36,15 @@ def create_batch_load_task(
             TargetTableName=table_name,
             DataModelConfiguration={
                 "DataModel": {
-                    "TimeColumn": "timestamp",
+                    "TimeColumn": "time",
                     "TimeUnit": "SECONDS",
                     "DimensionMappings": [
-                        {"SourceColumn": "plant_id", "DestinationColumn": "plant_id"}
+                        {"SourceColumn": "plant_id", "DestinationColumn": "plant_id"},
+                        {"SourceColumn": "tech_id", "DestinationColumn": "tech_id"},
                     ],
                     "MultiMeasureMappings": {
-                        "TargetMultiMeasureName": "tech_id",
+                        "TargetMultiMeasureName": "megawatts",
                         "MultiMeasureAttributeMappings": [
-                            {
-                                "SourceColumn": "ba_id",
-                                "TargetMultiMeasureAttributeName": "ba_id",
-                                "MeasureValueType": "DOUBLE",
-                            },
                             {
                                 "SourceColumn": "wind_pw",
                                 "TargetMultiMeasureAttributeName": "wind_pw",
@@ -88,6 +84,7 @@ if __name__ == "__main__":
     main_directory = args.main_directory
     DATABASE_NAME = args.database
     TABLE_NAME = args.table
+
     REGION = "us-west-2"
     HT_TTL_HOURS = 24
     CT_TTL_DAYS = 7

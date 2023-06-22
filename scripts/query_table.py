@@ -96,15 +96,14 @@ if __name__ == '__main__':
 
     paginator = client.get_paginator('query')
 
-    # database = "windpower"
-    # table = "test-table"
+    database = "windpower"
+    # table = "model_hrrr_hourly"
+    table = "model_windtoolkit"
 
     QUERY = f"""
-        SELECT *
-        FROM windpower.testTable
-        limit 5
+        SELECT count(*)
+        FROM {database}.{table}
     """
-
 
     start_time = time.time()
     run_query(QUERY)
