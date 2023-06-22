@@ -16,4 +16,4 @@ if __name__ == '__main__':
     write_client = boto3.client('timestream-write', config=Config(
         read_timeout=20, max_pool_connections=5000, retries={'max_attempts': 10}))
     
-    delete_table(write_client, 'windpower', 'test_table')
+    delete_table(write_client, 'windpower', 'model_hrrr_hourly')

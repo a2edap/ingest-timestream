@@ -4,9 +4,6 @@ from argparse import ArgumentDefaultsHelpFormatter, ArgumentParser
 import os
 import re
 
-START_TIME = 1514764800
-
-
 def build_parser():
     """Build argument parser.
 
@@ -22,6 +19,7 @@ def build_parser():
     parser.add_argument("input_directory")
     parser.add_argument("output_directory")
     parser.add_argument("time_resolution")
+    parser.add_argument("time_increment")
     return parser
 
 
@@ -31,15 +29,17 @@ if __name__ == "__main__":
     input_directory = args.input_directory
     output_directory = args.output_directory
     time_resolution = args.time_resolution
+    time_increment = args.time_increment
 
-    all_turbines = ["turbinea","turbineb","turbinec"]
+    START_TIME = 1514764800
+
+    all_turbines = ["turbineA","turbineB","turbineC"]
 
     for turbine in all_turbines:
         turbine_path = os.path.join(output_directory,turbine)
         if not os.path.exists(turbine_path):
             os.makedirs(turbine_path)
 
-    # csv file with supporting data
     unfiltered_data = pd.read_csv('wecc-matt.csv')
     data = unfiltered_data.loc[
         ~(
@@ -54,9 +54,10 @@ if __name__ == "__main__":
 
         match = re.search(r"Turbine([A-Za-z]+)\.\d+", filename)
         if match:
-            techid = match.group().lower().replace(".", "")
+            tech_id = match.group().replace(".", "")
 
-        turbine_cat = techid[:-1]
+        tech_id = tech_id[0].lower() + tech_id[1:]
+        turbine_cat = tech_id[:-1]
 
         df = pd.read_csv(filepath, low_memory=False)
         df = df.drop(df.columns[0], axis=1)
@@ -74,14 +75,14 @@ if __name__ == "__main__":
                     wind_value = round((df.loc[j, column_name] * multiplier), 8)
                     rows.append(
                         {
-                            "time": time_stamp,  # adding to main dataframe
+                            "time": time_stamp, 
                             "plant_id": plant_id,
-                            "tech_id": techid,
+                            "tech_id": tech_id,
                             "ba_id": data["ba_id"][i],
                             "wind_pw": wind_value,
                         }
                     )
-                    time_stamp = time_stamp + 300
+                    time_stamp = time_stamp + time_increment #update based on time resolution
 
         main = pd.DataFrame(rows)
 
@@ -97,6 +98,6 @@ if __name__ == "__main__":
             temp = main_grouped[main_grouped["ba_id"] == i]
             temp = temp.sort_values("time")
             temp.to_csv(
-                f"{output_directory}/{turbine_cat}/modelwkt.{time_resolution}.a1.2018.{techid}.{i}.csv",
+                f"{output_directory}/{turbine_cat}/modelwkt.{time_resolution}.a1.2018.{tech_id.lower()}.{i}.csv",
                 index=False,
             )
