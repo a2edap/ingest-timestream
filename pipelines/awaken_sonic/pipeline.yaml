@@ -1,0 +1,14 @@
+# s3://tsdat-prod/storage/root/awaken/data/sa1.met_z01.b0/sa1.met_z01.b0.20221001.190000.nc
+triggers:
+  - .*/awaken/.*\.sonic.*z.*\.csv
+
+inputs:
+  converter: pipelines.awaken_sonic.sonic_converter.from_csv_to_csv
+  variables:
+    - time
+    - wind speed
+    - wind direction
+
+outputs:
+  bucket_name: a2e-athena-test
+  storage_root: timestream/jobs/{date}.{time}/awaken/{dataset}/

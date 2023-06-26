@@ -2,6 +2,7 @@ from pathlib import Path
 from typing import Any, List, Optional, Union
 
 import xarray as xr
+import pandas as pd
 
 
 def from_netcdf_to_csv(
@@ -42,3 +43,28 @@ def from_netcdf_to_csv(
     )
 
     return output_filepath
+
+
+def from_csv_to_csv(
+    filepath: Union[Path, str],
+    variables: List[str],
+    location: str,
+    directory: Optional[Union[Path, str]] = None,
+    **kwargs: Optional[Any],
+) -> Path:
+    target = filepath
+    if directory is not None:
+        target = Path(directory) / Path(filepath).name
+
+    df = pd.read_csv(filepath)
+
+    df["location"] = location
+
+    df = df[variables + ["location"]]
+
+    df.to_csv(
+        filepath=target,
+        date_format="%Y-%m-%d %H:%M:%S.%f",
+    )
+
+    return Path(target)

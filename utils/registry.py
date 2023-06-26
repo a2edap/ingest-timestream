@@ -40,6 +40,7 @@ class PipelineRegistry:
         skipped = 0
 
         for input_key in input_keys:
+            input_key = Path(input_key).as_posix()
             config_files = self._match_input_key(input_key)
 
             if not multidispatch and len(config_files) > 1:
