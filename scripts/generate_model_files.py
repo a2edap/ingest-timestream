@@ -4,6 +4,7 @@ from argparse import ArgumentDefaultsHelpFormatter, ArgumentParser
 import os
 import re
 
+
 def build_parser():
     """Build argument parser.
 
@@ -30,17 +31,16 @@ if __name__ == "__main__":
     output_directory = args.output_directory
     time_resolution = args.time_resolution
     time_increment = args.time_increment
-
     START_TIME = 1514764800
 
-    all_turbines = ["turbineA","turbineB","turbineC"]
+    all_turbines = ["turbineA", "turbineB", "turbineC"]
 
     for turbine in all_turbines:
-        turbine_path = os.path.join(output_directory,turbine)
+        turbine_path = os.path.join(output_directory, turbine)
         if not os.path.exists(turbine_path):
             os.makedirs(turbine_path)
 
-    unfiltered_data = pd.read_csv('wecc-matt.csv')
+    unfiltered_data = pd.read_csv("scripts/supporting_files/name_code_nameplate.csv")
     data = unfiltered_data.loc[
         ~(
             pd.isna(unfiltered_data["plant_name"])
@@ -75,14 +75,16 @@ if __name__ == "__main__":
                     wind_value = round((df.loc[j, column_name] * multiplier), 8)
                     rows.append(
                         {
-                            "time": time_stamp, 
+                            "time": time_stamp,
                             "plant_id": plant_id,
                             "tech_id": tech_id,
                             "ba_id": data["ba_id"][i],
                             "wind_pw": wind_value,
                         }
                     )
-                    time_stamp = time_stamp + time_increment #update based on time resolution
+                    time_stamp = (
+                        time_stamp + time_increment
+                    )  # update based on time resolution
 
         main = pd.DataFrame(rows)
 
