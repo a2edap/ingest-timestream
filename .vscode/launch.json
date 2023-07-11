@@ -15,6 +15,7 @@
             ],
             "justMyCode": true,
             "env": {
+                "TSDAT_S3_BUCKET_NAME": "a2e-athena-test",
                 // You will need to set these environment variables to use boto3 to upload the output data
                 "AWS_ACCESS_KEY_ID": "",
                 "AWS_SECRET_ACCESS_KEY": "",

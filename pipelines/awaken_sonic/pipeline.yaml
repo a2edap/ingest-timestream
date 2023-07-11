@@ -10,5 +10,4 @@ inputs:
     - wind direction
 
 outputs:
-  bucket_name: a2e-athena-test
   storage_root: timestream/jobs/{date}.{time}/awaken/{dataset}/
