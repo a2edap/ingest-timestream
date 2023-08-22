@@ -1,8 +1,10 @@
 from argparse import ArgumentDefaultsHelpFormatter, ArgumentParser
+from typing import List
 import boto3
 from botocore.config import Config
 from datetime import datetime
 import logging
+import os
 
 boto3.setup_default_session(profile_name="dev", region_name="us-west-2")
 
@@ -22,7 +24,7 @@ def build_parser():
     parser.add_argument("input_bucket")
     parser.add_argument("base_path")
     parser.add_argument(
-        "--date_time", nargs="?", help="Optional date and time subdirectory"
+        "--date.time", nargs="?", help="Optional date and time subdirectory"
     )
     return parser
 
@@ -58,7 +60,7 @@ def create_batch_load_task(
                         {"SourceColumn": "location", "DestinationColumn": "location"},
                     ],
                     "MultiMeasureMappings": {
-                        "TargetMultiMeasureName": "megawatts",  # folder name where its coming from 
+                        "TargetMultiMeasureName": "megawatts",  # folder name where its coming from
                         "MultiMeasureAttributeMappings": [
                             {
                                 "SourceColumn": "wind_speed",
@@ -97,26 +99,22 @@ def create_batch_load_task(
         logging.error("Create batch load task job failed:", err)
         return None
 
+from utils.timestream import TimestreamPipeline
+class BatchPipeline(TimestreamPipeline):
+    def run(self, inputs: List[str]) -> None:
+        # inputs is a list of base paths timestream/jobs/date.time
+        main()
+        return super().run(inputs)
 
-if __name__ == "__main__":
-    parser = build_parser()
-    args = parser.parse_args()
+    
 
-    input_bucket = args.input_bucket
-    base_path = args.base_path
-
-    if args.date_time:
-        date_time = args.date_time
-    else:
-        current_date = datetime.now().strftime("%Y%m%d.%H0000")
-        date_time = current_date
-
+def main(input_bucket, base_path, date.time):
     database = "awaken"
     REGION = "us-west-2"
-    REPORT_BUCKET_NAME = "a2e-athena-test"  # do we want reporting bucket?
-    REPORT_OBJECT_KEY_PREFIX = "timestream/logs/"
+    REPORT_BUCKET_NAME = os.getenv("REPORT_BUCKET_NAME", "a2e-athena-test")
+    REPORT_OBJECT_KEY_PREFIX = os.getenv("REPORT_OBJECT_KEY_PREFIX", "timestream/logs/")
 
-    input_prefix = "{}/{}/awaken/".format(base_path, date_time)
+    input_prefix = "{}/{}/awaken/".format(base_path, date.time)
 
     session = boto3.Session()
     write_client = configure_boto3_client("timestream-write", REGION)
@@ -159,3 +157,18 @@ if __name__ == "__main__":
             error_message = f"Folder '{folder}': more than 100"
             logging.error(error_message)
             raise ValueError(error_message)
+
+
+if __name__ == "__main__":
+    parser = build_parser()
+    args = parser.parse_args()
+
+    input_bucket = args.input_bucket
+    base_path = args.base_path
+
+    if args.date.time:
+        date.time = args.date.time
+    else:
+        current_date = datetime.now().strftime("%Y%m%d.%H0000")
+        date.time = current_date
+    main(input_bucket, base_path, date.time)
