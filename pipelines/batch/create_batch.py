@@ -1,12 +1,11 @@
 from argparse import ArgumentDefaultsHelpFormatter, ArgumentParser
-from typing import List
+from typing import Any, Dict, List
 import boto3
 from botocore.config import Config
 from datetime import datetime
 import logging
 import os
-
-boto3.setup_default_session(profile_name="dev", region_name="us-west-2")
+import pandas as pd
 
 
 def build_parser():
@@ -24,7 +23,7 @@ def build_parser():
     parser.add_argument("input_bucket")
     parser.add_argument("base_path")
     parser.add_argument(
-        "--date.time", nargs="?", help="Optional date and time subdirectory"
+        "--date_time", nargs="?", help="Optional date and time subdirectory"
     )
     return parser
 
@@ -39,86 +38,108 @@ def configure_boto3_client(service_name, region_name):
     )
 
 
+def parse_data_model(input_bucket, input_prefix) -> Dict[str, Any]:
+    s3 = boto3.resource("s3")
+
+    column_names = []
+    column_models = []
+
+    for object_summary in s3.Bucket(input_bucket).objects.filter(Prefix=input_prefix):
+        if object_summary.key.endswith(".csv"):
+            csv_object = s3.Object(input_bucket, object_summary.key)
+            csv_body = csv_object.get()["Body"]
+            df = pd.read_csv(csv_body, nrows=1)
+            column_names = df.columns.tolist()
+            break
+
+    if column_names:
+        multi_measure_columns = column_names[2:]
+
+        for name in multi_measure_columns:
+            column_models.append(
+                {
+                    "SourceColumn": f"{name}",
+                    f"TargetMultiMeasureAttributeName": f"{name}",
+                    "MeasureValueType": "DOUBLE",
+                }
+            )
+
+    data_model = {
+        "DataModel": {
+            "TimeColumn": "time",
+            "TimeUnit": "SECONDS",
+            "DimensionMappings": [
+                {"SourceColumn": "location", "DestinationColumn": "location"},
+            ],
+            "MultiMeasureMappings": {
+                "TargetMultiMeasureName": "ID",  # TODO: call this the folder name (e.g., lidar, met, etc)
+                "MultiMeasureAttributeMappings": column_models,
+            },
+        }
+    }
+    return data_model
+
+
 def create_batch_load_task(
-    client,
-    database,
-    table,
-    input_bucket_name,
-    input_object_key_prefix,
-    report_bucket_name,
-    report_object_key_prefix,
+    client: str,
+    table: str,
+    input_prefix: str,
+    input_bucket_name: str,
+    input_object_key_prefix: str,
+    report_bucket_name: str,
+    report_object_key_prefix: str,
 ):
+    database = "awaken"
+    data_model_configuration = parse_data_model(input_bucket, input_prefix)
+    data_source_configuration = {
+        "DataSourceS3Configuration": {
+            "BucketName": input_bucket_name,
+            "ObjectKeyPrefix": input_object_key_prefix,
+        },
+        "DataFormat": "CSV",
+    }
+    report_configuration = {
+        "ReportS3Configuration": {
+            "BucketName": report_bucket_name,
+            "ObjectKeyPrefix": report_object_key_prefix,
+            "EncryptionOption": "SSE_S3",
+        }
+    }
     try:
         result = client.create_batch_load_task(
             TargetDatabaseName=database,
             TargetTableName=table,
-            DataModelConfiguration={
-                "DataModel": {
-                    "TimeColumn": "time",
-                    "TimeUnit": "SECONDS",
-                    "DimensionMappings": [
-                        {"SourceColumn": "location", "DestinationColumn": "location"},
-                    ],
-                    "MultiMeasureMappings": {
-                        "TargetMultiMeasureName": "megawatts",  # folder name where its coming from
-                        "MultiMeasureAttributeMappings": [
-                            {
-                                "SourceColumn": "wind_speed",
-                                "TargetMultiMeasureAttributeName": "wind_speed",
-                                "MeasureValueType": "DOUBLE",
-                            },
-                            {
-                                "SourceColumn": "wind_direction",
-                                "TargetMultiMeasureAttributeName": "wind_direction",
-                                "MeasureValueType": "DOUBLE",
-                            },
-                        ],
-                    },
-                }
-            },
-            DataSourceConfiguration={
-                "DataSourceS3Configuration": {
-                    "BucketName": input_bucket_name,
-                    "ObjectKeyPrefix": input_object_key_prefix,
-                },
-                "DataFormat": "CSV",
-            },
-            ReportConfiguration={
-                "ReportS3Configuration": {
-                    "BucketName": report_bucket_name,
-                    "ObjectKeyPrefix": report_object_key_prefix,
-                    "EncryptionOption": "SSE_S3",
-                }
-            },
+            DataModelConfiguration=data_model_configuration,
+            DataSourceConfiguration=data_source_configuration,
+            ReportConfiguration=report_configuration,
         )
-
         task_id = result["TaskId"]
         logging.info("Batch load task created successfully.", task_id)
         return task_id
     except Exception as err:
         logging.error("Create batch load task job failed:", err)
-        return None
+
 
 from utils.timestream import TimestreamPipeline
+
+
 class BatchPipeline(TimestreamPipeline):
     def run(self, inputs: List[str]) -> None:
-        # inputs is a list of base paths timestream/jobs/date.time
+        # inputs is a list of paths timestream/jobs/yyyymmdd.HH0000
         main()
         return super().run(inputs)
 
-    
 
-def main(input_bucket, base_path, date.time):
+def main(input_bucket: str, base_path: str, date_time: str):
     database = "awaken"
-    REGION = "us-west-2"
     REPORT_BUCKET_NAME = os.getenv("REPORT_BUCKET_NAME", "a2e-athena-test")
     REPORT_OBJECT_KEY_PREFIX = os.getenv("REPORT_OBJECT_KEY_PREFIX", "timestream/logs/")
 
-    input_prefix = "{}/{}/awaken/".format(base_path, date.time)
+    input_prefix = "{}/{}/awaken/".format(base_path, date_time)
 
-    session = boto3.Session()
-    write_client = configure_boto3_client("timestream-write", REGION)
-    s3_client = configure_boto3_client("s3", REGION)
+    boto3.setup_default_session(profile_name="dev", region_name="us-west-2")
+    write_client = configure_boto3_client("timestream-write")
+    s3_client = configure_boto3_client("s3")
 
     response = s3_client.list_objects_v2(
         Bucket=input_bucket, Prefix=input_prefix, Delimiter="/"
@@ -126,7 +147,6 @@ def main(input_bucket, base_path, date.time):
 
     folders = set()
     total_size = 0
-
     for common_prefix in response.get("CommonPrefixes", []):
         folder = common_prefix["Prefix"].split("/")[-2]
         folders.add(folder)
@@ -146,6 +166,7 @@ def main(input_bucket, base_path, date.time):
                 #     write_client,
                 #     database,
                 #     table,  # do we want to extract the table name from the folder?
+                #     input_prefix,
                 #     input_bucket,
                 #     input_prefix,
                 #     REPORT_BUCKET_NAME,
@@ -154,6 +175,7 @@ def main(input_bucket, base_path, date.time):
             except ValueError as e:
                 print(f"Error: {e}")
         else:
+            # TODO: Iterate through in groups of 100 files and create a batch for each
             error_message = f"Folder '{folder}': more than 100"
             logging.error(error_message)
             raise ValueError(error_message)
@@ -166,9 +188,10 @@ if __name__ == "__main__":
     input_bucket = args.input_bucket
     base_path = args.base_path
 
-    if args.date.time:
-        date.time = args.date.time
+    if args.date_time:
+        date_time = args.date_time
     else:
         current_date = datetime.now().strftime("%Y%m%d.%H0000")
-        date.time = current_date
-    main(input_bucket, base_path, date.time)
+        date_time = current_date
+
+    main(input_bucket, base_path, date_time)
