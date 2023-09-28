@@ -7,6 +7,10 @@ import logging
 import os
 import pandas as pd
 
+REPORT_BUCKET_NAME = os.getenv("REPORT_BUCKET_NAME", "a2e-athena-test")
+REPORT_OBJECT_KEY_PREFIX = os.getenv("REPORT_OBJECT_KEY_PREFIX", "timestream/logs/")
+REGION = "us-west-2"
+
 
 def build_parser():
     """Build argument parser.
@@ -28,14 +32,22 @@ def build_parser():
     return parser
 
 
-def configure_boto3_client(service_name, region_name):
+def configure_boto3_client(service_name):
     return boto3.client(
         service_name,
-        region_name=region_name,
+        region_name=REGION,
         config=Config(
             read_timeout=20, max_pool_connections=5000, retries={"max_attempts": 10}
         ),
     )
+
+
+def extract_substring(folder: str):
+    parts = folder.split(".")
+    if "_" in folder:
+        result = parts[1].split("_")[0]
+        return result
+    return parts[1]
 
 
 def parse_data_model(
@@ -88,8 +100,6 @@ def create_batch_load_task(
     input_prefix: str,
     input_bucket_name: str,
     input_object_key_prefix: str,
-    report_bucket_name: str,
-    report_object_key_prefix: str,
     targetMultiMeasureName: str,
 ):
     database = "awaken"
@@ -105,8 +115,8 @@ def create_batch_load_task(
     }
     report_configuration = {
         "ReportS3Configuration": {
-            "BucketName": report_bucket_name,
-            "ObjectKeyPrefix": report_object_key_prefix,
+            "BucketName": REPORT_BUCKET_NAME,
+            "ObjectKeyPrefix": REPORT_OBJECT_KEY_PREFIX,
             "EncryptionOption": "SSE_S3",
         }
     }
@@ -125,24 +135,22 @@ def create_batch_load_task(
         logging.error("Create batch load task job failed:", err)
 
 
-from utils.timestream import TimestreamPipeline
+# from utils.timestream import TimestreamPipeline
 
 
-class BatchPipeline(TimestreamPipeline):
-    def run(self, inputs: List[str]) -> None:
-        # inputs is a list of paths timestream/jobs/yyyymmdd.HH0000
-        main()
-        return super().run(inputs)
+# class BatchPipeline(TimestreamPipeline):
+#     def run(self, inputs: List[str]) -> None:
+#         # inputs is a list of paths timestream/jobs/yyyymmdd.HH0000
+#         main()
+#         return super().run(inputs)
 
 
 def main(input_bucket: str, base_path: str, date_time: str):
     database = "awaken"
-    REPORT_BUCKET_NAME = os.getenv("REPORT_BUCKET_NAME", "a2e-athena-test")
-    REPORT_OBJECT_KEY_PREFIX = os.getenv("REPORT_OBJECT_KEY_PREFIX", "timestream/logs/")
 
     input_prefix = "{}/{}/awaken/".format(base_path, date_time)
 
-    boto3.setup_default_session(profile_name="dev", region_name="us-west-2")
+    boto3.setup_default_session(profile_name="dev")
     write_client = configure_boto3_client("timestream-write")
     s3_client = configure_boto3_client("s3")
 
@@ -161,26 +169,21 @@ def main(input_bucket: str, base_path: str, date_time: str):
             Bucket=input_bucket, Prefix=input_prefix + folder + "/"
         )
         file_count = len(within_folder.get("Contents", []))
-        # for TargetMultiMeasureName
-        folder_name_parts = folder.split(".")
-        targetMultiMeasureName = folder_name_parts[1]
+        targetMultiMeasureName = extract_substring(folder)
 
         if file_count < 100:
             print(f"Folder '{folder}': less than 100")
             table = f"{database}_{folder.replace('.', '_')}"
             try:
                 print("batch created")
-                # task_id = create_batch_load_task(
-                #     write_client,
-                #     database,
-                #     table,  # do we want to extract the table name from the folder?
-                #     input_prefix,
-                #     input_bucket,
-                #     input_prefix,
-                #     REPORT_BUCKET_NAME,
-                #     REPORT_OBJECT_KEY_PREFIX,
-                #     targetMultiMeasureName
-                # )
+                task_id = create_batch_load_task(
+                    write_client,
+                    table,  # do we want to extract the table name from the folder?
+                    input_prefix,
+                    input_bucket,
+                    input_prefix,
+                    targetMultiMeasureName,
+                )
             except ValueError as e:
                 print(f"Error: {e}")
         else:
