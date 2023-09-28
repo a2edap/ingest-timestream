@@ -38,7 +38,9 @@ def configure_boto3_client(service_name, region_name):
     )
 
 
-def parse_data_model(input_bucket, input_prefix) -> Dict[str, Any]:
+def parse_data_model(
+    input_bucket, input_prefix, targetMultiMeasureName
+) -> Dict[str, Any]:
     s3 = boto3.resource("s3")
 
     column_names = []
@@ -72,7 +74,7 @@ def parse_data_model(input_bucket, input_prefix) -> Dict[str, Any]:
                 {"SourceColumn": "location", "DestinationColumn": "location"},
             ],
             "MultiMeasureMappings": {
-                "TargetMultiMeasureName": "ID",  # TODO: call this the folder name (e.g., lidar, met, etc)
+                "TargetMultiMeasureName": targetMultiMeasureName,
                 "MultiMeasureAttributeMappings": column_models,
             },
         }
@@ -88,9 +90,12 @@ def create_batch_load_task(
     input_object_key_prefix: str,
     report_bucket_name: str,
     report_object_key_prefix: str,
+    targetMultiMeasureName: str,
 ):
     database = "awaken"
-    data_model_configuration = parse_data_model(input_bucket, input_prefix)
+    data_model_configuration = parse_data_model(
+        input_bucket, input_prefix, targetMultiMeasureName
+    )
     data_source_configuration = {
         "DataSourceS3Configuration": {
             "BucketName": input_bucket_name,
@@ -156,6 +161,9 @@ def main(input_bucket: str, base_path: str, date_time: str):
             Bucket=input_bucket, Prefix=input_prefix + folder + "/"
         )
         file_count = len(within_folder.get("Contents", []))
+        # for TargetMultiMeasureName
+        folder_name_parts = folder.split(".")
+        targetMultiMeasureName = folder_name_parts[1]
 
         if file_count < 100:
             print(f"Folder '{folder}': less than 100")
@@ -171,6 +179,7 @@ def main(input_bucket: str, base_path: str, date_time: str):
                 #     input_prefix,
                 #     REPORT_BUCKET_NAME,
                 #     REPORT_OBJECT_KEY_PREFIX,
+                #     targetMultiMeasureName
                 # )
             except ValueError as e:
                 print(f"Error: {e}")
