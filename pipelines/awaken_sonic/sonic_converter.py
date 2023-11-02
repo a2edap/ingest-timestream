@@ -17,11 +17,12 @@ def from_csv_to_csv(
     df = pd.read_csv(filepath, skiprows=[1])
 
     df["location"] = location
+    df["measure_name"] = "data"
 
     df["time"] = pd.to_datetime(df[["year", "month", "day", "hour", "minute"]])
 
-    df = df[variables + ["location"]]
+    df = df[variables + ["location", "measure_name"]]
 
-    df.to_csv(target,date_format="%Y-%m-%d %H:%M:%S.%f")
+    df.to_csv(target, date_format="%Y-%m-%d %H:%M:%S.%f")
 
     return Path(target)
