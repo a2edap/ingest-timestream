@@ -59,7 +59,6 @@ def from_csv_to_csv(
     df = pd.read_csv(filepath)
 
     df["location"] = location
-    df["measure_name"] = "data"
 
     df = df[variables + ["location", "measure_name"]]
 

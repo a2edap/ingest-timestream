@@ -17,10 +17,9 @@ def from_csv_to_csv(
     df = pd.read_csv(filepath, skiprows=[1])
 
     df["location"] = location
-    df["measure_name"] = "data"
 
     df["time"] = pd.to_datetime(df[["year", "month", "day", "hour", "minute"]])
-    df["time"] = df["time"].apply(lambda x: x.timestamp())
+    df["time"] = df["time"].apply(lambda x: x.timestamp()).astype(int)
 
     df = df[variables + ["location", "measure_name"]]
 
