@@ -20,9 +20,10 @@ def from_csv_to_csv(
     df["measure_name"] = "data"
 
     df["time"] = pd.to_datetime(df[["year", "month", "day", "hour", "minute"]])
+    df["time"] = df["time"].apply(lambda x: x.timestamp())
 
     df = df[variables + ["location", "measure_name"]]
 
-    df.to_csv(target, date_format="%Y-%m-%d %H:%M:%S.%f")
+    df.to_csv(target)
 
     return Path(target)
