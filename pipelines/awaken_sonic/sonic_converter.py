@@ -16,13 +16,14 @@ def from_csv_to_csv(
 
     df = pd.read_csv(filepath, skiprows=[1])
 
+    df["measure_name"] = "data"
     df["location"] = location
 
     df["time"] = pd.to_datetime(df[["year", "month", "day", "hour", "minute"]])
-    df["time"] = df["time"].apply(lambda x: x.timestamp()).astype(int)
+    df["time"] = (df["time"] - pd.Timestamp("1970-01-01")) // pd.Timedelta("1ms")
+    df = df[variables + ["measure_name", "location"]]
+    df.columns = df.columns.str.replace(" ", "_")
 
-    df = df[variables + ["location", "measure_name"]]
-
-    df.to_csv(target)
+    df.to_csv(target, index=False)
 
     return Path(target)

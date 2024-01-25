@@ -3,6 +3,7 @@ from typing import Any, List, Optional, Union
 
 import xarray as xr
 import pandas as pd
+import numpy as np
 
 
 def from_netcdf_to_csv(
@@ -21,6 +22,7 @@ def from_netcdf_to_csv(
     ds = xr.open_dataset(filepath)
 
     ds["location"] = location
+    ds["measure_name"] = "data"
 
     new_variables = []
     i = 0
@@ -31,9 +33,15 @@ def from_netcdf_to_csv(
         else:
             break
     new_variables.append("location")
+    new_variables.append("measure_name")
     new_variables.extend(variables[i:])
 
     ds = ds[new_variables]
+
+    ds["time"] = (
+        ds["time"].values.astype("datetime64[ms]")
+        - np.datetime64("1970-01-01T00:00:00")
+    ).astype(np.int64)
 
     output_filepath, _ = to_csv(
         ds,
