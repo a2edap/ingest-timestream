@@ -3,6 +3,13 @@ from botocore.config import Config
 from datetime import datetime, timedelta
 import re
 from create_table import create_table
+import logging
+
+logging.basicConfig(filename="error.log", level=logging.ERROR)
+
+
+def log_error(message):
+    logging.error(message)
 
 
 def create_batch_load_task(
@@ -58,7 +65,9 @@ def create_batch_load_task(
         print("Successfully created batch load task: ", task_id)
         return task_id
     except Exception as err:
-        print("Create batch load task job failed:", err)
+        error_message = f"Create batch load task job failed: {err}"
+        print(error_message)
+        log_error(error_message)
         return None
 
 
@@ -110,81 +119,87 @@ def database_exists(client, database_name):
 
 
 if __name__ == "__main__":
-    session = boto3.Session()
-    s3 = boto3.client("s3")
+    try:
+        session = boto3.Session()
+        s3 = boto3.client("s3")
 
-    write_client = session.client(
-        "timestream-write",
-        region_name="us-west-2",
-        config=Config(
-            read_timeout=20, max_pool_connections=5000, retries={"max_attempts": 10}
-        ),
-    )
-
-    INPUT_BUCKET_NAME = "a2e-athena-test"
-    INPUT_OBJECT_KEY_PREFIX = f"timestream/jobs/"
-
-    # get all the nested folders in INPUT_OBJECT_KEY_PREFIX
-    response = s3.list_objects_v2(
-        Bucket=INPUT_BUCKET_NAME, Prefix=INPUT_OBJECT_KEY_PREFIX, Delimiter="/"
-    )
-    allDatetimeKeys = [
-        prefix.get("Prefix") for prefix in response.get("CommonPrefixes", [])
-    ]
-    print("allDatetimeKeys", allDatetimeKeys)
-
-    relevantDatetimeKey = filter_keys_by_date(allDatetimeKeys)
-    print("relevant datetime key:", relevantDatetimeKey)
-
-    # get all the project folders (Only awaken at the moment)
-    nestedProjects = s3.list_objects_v2(
-        Bucket=INPUT_BUCKET_NAME, Prefix=relevantDatetimeKey, Delimiter="/"
-    )
-    nestProjectKeys = [
-        prefix.get("Prefix") for prefix in nestedProjects.get("CommonPrefixes", [])
-    ]
-    print("nestProjectKeys", nestProjectKeys)
-
-    for key in nestProjectKeys:
-        newFolderswithData = s3.list_objects_v2(
-            Bucket=INPUT_BUCKET_NAME, Prefix=key, Delimiter="/"
+        write_client = session.client(
+            "timestream-write",
+            region_name="us-west-2",
+            config=Config(
+                read_timeout=20, max_pool_connections=5000, retries={"max_attempts": 10}
+            ),
         )
 
-        create_batch_keys = [
-            prefix.get("Prefix")
-            for prefix in newFolderswithData.get("CommonPrefixes", [])
+        INPUT_BUCKET_NAME = "a2e-athena-test"
+        INPUT_OBJECT_KEY_PREFIX = "timestream/jobs/"
+
+        # get all the nested folders in INPUT_OBJECT_KEY_PREFIX
+        response = s3.list_objects_v2(
+            Bucket=INPUT_BUCKET_NAME, Prefix=INPUT_OBJECT_KEY_PREFIX, Delimiter="/"
+        )
+        allDatetimeKeys = [
+            prefix.get("Prefix") for prefix in response.get("CommonPrefixes", [])
         ]
+        print("allDatetimeKeys", allDatetimeKeys)
 
-        for batch_key in create_batch_keys:
-            print("batch_key", batch_key)
+        relevantDatetimeKey = filter_keys_by_date(allDatetimeKeys)
+        print("relevant datetime key:", relevantDatetimeKey)
 
-            database_name, table_name = extract_names(batch_key)
+        # get all the project folders (Only awaken at the moment)
+        nestedProjects = s3.list_objects_v2(
+            Bucket=INPUT_BUCKET_NAME, Prefix=relevantDatetimeKey, Delimiter="/"
+        )
+        nestProjectKeys = [
+            prefix.get("Prefix") for prefix in nestedProjects.get("CommonPrefixes", [])
+        ]
+        print("nestProjectKeys", nestProjectKeys)
 
-            table_in_ts = table_exists(
-                client=write_client, database_name=database_name, table_name=table_name
+        for key in nestProjectKeys:
+            newFolderswithData = s3.list_objects_v2(
+                Bucket=INPUT_BUCKET_NAME, Prefix=key, Delimiter="/"
             )
-            database_in_ts = database_exists(
-                client=write_client, database_name=database_name
-            )
 
-            if table_in_ts and database_in_ts:
-                create_batch_load_task(
-                    write_client,
-                    database_name,
-                    table_name,
-                    INPUT_BUCKET_NAME,
-                    input_object_key_prefix=batch_key,
+            create_batch_keys = [
+                prefix.get("Prefix")
+                for prefix in newFolderswithData.get("CommonPrefixes", [])
+            ]
+
+            for batch_key in create_batch_keys:
+                print("batch_key", batch_key)
+
+                database_name, table_name = extract_names(batch_key)
+
+                table_in_ts = table_exists(
+                    client=write_client,
+                    database_name=database_name,
+                    table_name=table_name,
                 )
-                print("batch created")
-            elif not table_in_ts and database_in_ts:
-                create_table(write_client, database_name, table_name)
-                create_batch_load_task(
-                    write_client,
-                    database_name,
-                    table_name,
-                    INPUT_BUCKET_NAME,
-                    input_object_key_prefix=batch_key,
+                database_in_ts = database_exists(
+                    client=write_client, database_name=database_name
                 )
-                print("created table and then create batch")
-            else:
-                print("database does not exist")
+
+                if table_in_ts and database_in_ts:
+                    create_batch_load_task(
+                        write_client,
+                        database_name,
+                        table_name,
+                        INPUT_BUCKET_NAME,
+                        input_object_key_prefix=batch_key,
+                    )
+                    print("batch created")
+                elif not table_in_ts and database_in_ts:
+                    create_table(write_client, database_name, table_name)
+                    create_batch_load_task(
+                        write_client,
+                        database_name,
+                        table_name,
+                        INPUT_BUCKET_NAME,
+                        input_object_key_prefix=batch_key,
+                    )
+                    print("created table and then create batch")
+                else:
+                    print("database does not exist")
+
+    except Exception as e:
+        log_error(f"An error occurred: {str(e)}")
