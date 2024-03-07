@@ -3,7 +3,10 @@ from botocore.config import Config
 from datetime import datetime, timedelta
 import re
 from create_table import create_table
+from listOfBatchLoads import count_batch_load_tasks_in_progress
 import logging
+import math
+import time
 
 logging.basicConfig(filename="error.log", level=logging.ERROR)
 
@@ -77,8 +80,6 @@ def filter_keys_by_date(keys):
     previous_hour_time = (current_datetime - timedelta(hours=1)).strftime("%H0000")
     target_format = current_date + "." + previous_hour_time
 
-    target_format = "20240119.13000"
-
     matching_keys = [key for key in keys if target_format in key]
     return matching_keys[0] if matching_keys else ""
 
@@ -116,6 +117,63 @@ def database_exists(client, database_name):
             return True
 
     return False
+
+
+def copy_files_in_chunks(files, batch_key):
+    total_files = len(files)
+    num_chunks = math.ceil(total_files / 100)
+    chunk_keys = []
+    # Iterate through each chunk
+    for i in range(num_chunks):
+        # Create chunk key
+        chunk_key = f"{batch_key}chunk{i + 1}"
+        chunk_keys.append(chunk_key)
+        # Copy files to the chunk
+        chunk_files = files[
+            i * 100 : min((i + 1) * 100, total_files)
+        ]  # Get files for the current chunk, ensuring not to go beyond the total number of files
+        for file in chunk_files:
+            new_file_key = file["Key"].split("/")[-1]
+            copy_source = {
+                "Bucket": INPUT_BUCKET_NAME,
+                "Key": file["Key"],
+            }
+            s3.copy_object(
+                CopySource=copy_source,
+                Bucket=INPUT_BUCKET_NAME,
+                Key=f"{chunk_key}/{new_file_key}",
+            )
+
+    return chunk_keys
+
+
+def check_and_create_batch_task(write_client, database_name, table_name, batch_key):
+    MAX_CONCURRENT_ACCOUNT_TASKS = 10
+    MAX_CONCURRENT_TABLE_TASKS = 5
+    SLEEP_INTERVAL = 15
+    while True:
+        num_in_progress, table_counts = count_batch_load_tasks_in_progress()
+        current_table_count = table_counts.get(table_name, 0)
+        print("Num_in_progress", num_in_progress)
+        if num_in_progress < MAX_CONCURRENT_ACCOUNT_TASKS:
+            if current_table_count < MAX_CONCURRENT_TABLE_TASKS:
+                print("before create batch table count: ", current_table_count)
+                create_batch_load_task(
+                    write_client,
+                    database_name,
+                    table_name,
+                    INPUT_BUCKET_NAME,
+                    input_object_key_prefix=batch_key,
+                )
+                break
+            else:
+                print(
+                    f"Table {table_name} already has 5 or more batch tasks in progress. Waiting..."
+                )
+                time.sleep(SLEEP_INTERVAL)
+        else:
+            print("Maximum concurrent tasks reached. Waiting...")
+            time.sleep(SLEEP_INTERVAL)
 
 
 if __name__ == "__main__":
@@ -167,39 +225,70 @@ if __name__ == "__main__":
 
             for batch_key in create_batch_keys:
                 print("batch_key", batch_key)
-
+                list_of_chunk_keys = None
                 database_name, table_name = extract_names(batch_key)
 
-                table_in_ts = table_exists(
-                    client=write_client,
-                    database_name=database_name,
-                    table_name=table_name,
+                # if more than 100 files in the folder, then it should continue and not create batch
+                response = s3.list_objects_v2(
+                    Bucket=INPUT_BUCKET_NAME, Prefix=batch_key
                 )
-                database_in_ts = database_exists(
-                    client=write_client, database_name=database_name
-                )
+                files = response.get("Contents", [])
+                objects_in_folder = len(response.get("Contents", []))
+                files = response.get("Contents", [])
+                if objects_in_folder > 100:
+                    print("inside over 100 files if statement")
+                    list_of_chunk_keys = copy_files_in_chunks(files, batch_key)
 
-                if table_in_ts and database_in_ts:
-                    create_batch_load_task(
-                        write_client,
-                        database_name,
-                        table_name,
-                        INPUT_BUCKET_NAME,
-                        input_object_key_prefix=batch_key,
-                    )
-                    print("batch created")
-                elif not table_in_ts and database_in_ts:
-                    create_table(write_client, database_name, table_name)
-                    create_batch_load_task(
-                        write_client,
-                        database_name,
-                        table_name,
-                        INPUT_BUCKET_NAME,
-                        input_object_key_prefix=batch_key,
-                    )
-                    print("created table and then create batch")
+                    if list_of_chunk_keys is not None:
+                        for key in list_of_chunk_keys:
+                            table_in_ts = table_exists(
+                                client=write_client,
+                                database_name=database_name,
+                                table_name=table_name,
+                            )
+
+                            database_in_ts = database_exists(
+                                client=write_client, database_name=database_name
+                            )
+
+                            if table_in_ts and database_in_ts:
+                                check_and_create_batch_task(
+                                    write_client, database_name, table_name, key
+                                )
+                                print("batch created")
+                            elif not table_in_ts and database_in_ts:
+                                create_table(write_client, database_name, table_name)
+                                check_and_create_batch_task(
+                                    write_client, database_name, table_name, key
+                                )
+                                print(
+                                    f"created {table_name} table and then create batch"
+                                )
+                            else:
+                                print("database does not exist")
                 else:
-                    print("database does not exist")
+                    table_in_ts = table_exists(
+                        client=write_client,
+                        database_name=database_name,
+                        table_name=table_name,
+                    )
+                    database_in_ts = database_exists(
+                        client=write_client, database_name=database_name
+                    )
+
+                    if table_in_ts and database_in_ts:
+                        check_and_create_batch_task(
+                            write_client, database_name, table_name, batch_key
+                        )
+                        print("batch created")
+                    elif not table_in_ts and database_in_ts:
+                        create_table(write_client, database_name, table_name)
+                        check_and_create_batch_task(
+                            write_client, database_name, table_name, batch_key
+                        )
+                        print(f"created {table_name} table and then create batch")
+                    else:
+                        print("database does not exist")
 
     except Exception as e:
         log_error(f"An error occurred: {str(e)}")
