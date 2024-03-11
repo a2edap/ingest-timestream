@@ -195,8 +195,7 @@ class Converter(Protocol):
         location: str,
         directory: Optional[Union[Path, str]] = None,
         **kwargs: Optional[Any],
-    ) -> Union[Tuple[Path, ...], Path]:
-        ...
+    ) -> Union[Tuple[Path, ...], Path]: ...
 
 
 class TimestreamPipeline:
@@ -284,7 +283,7 @@ class TimestreamPipeline:
                     self.storage_root.substitute(
                         date=date.strftime("%Y%m%d"),
                         time=time.strftime("%H0000"),
-                        dataset=Path(input_filepath).parent.name,
+                        dataset=Path(input_filepath).parts[1],
                     )
                 )
                 storage_root.mkdir(parents=True, exist_ok=True)
