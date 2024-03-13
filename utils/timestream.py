@@ -286,6 +286,9 @@ class TimestreamPipeline:
                         dataset=Path(input_filepath).parts[1],
                     )
                 )
+
+                print("input_filepath",input_filepath)
+                print("dataset",dataset)
                 storage_root.mkdir(parents=True, exist_ok=True)
                 location = Path(input_filepath).name.split(".")[0]
                 self.converter(
