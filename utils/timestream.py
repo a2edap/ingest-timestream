@@ -279,8 +279,8 @@ class TimestreamPipeline:
         time = datetime.datetime.now()
         with tempfile.TemporaryDirectory() as tmp_dir:
             for input_filepath in inputs:
-                print("input_filepath",input_filepath)
-                print("dataset", Path(input_filepath).parts[1])
+                print("***input_filepath",input_filepath)
+                print("***dataset", Path(input_filepath).parts[1])
                 storage_root = Path(tmp_dir) / Path(
                     self.storage_root.substitute(
                         date=date.strftime("%Y%m%d"),
