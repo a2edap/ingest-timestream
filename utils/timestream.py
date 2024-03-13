@@ -283,7 +283,7 @@ class TimestreamPipeline:
                     self.storage_root.substitute(
                         date=date.strftime("%Y%m%d"),
                         time=time.strftime("%H0000"),
-                        dataset=Path(input_filepath).parts[1],
+                        dataset=Path(input_filepath).parts[4],
                     )
                 )
                 storage_root.mkdir(parents=True, exist_ok=True)
