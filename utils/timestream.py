@@ -280,12 +280,14 @@ class TimestreamPipeline:
         with tempfile.TemporaryDirectory() as tmp_dir:
             for input_filepath in inputs:
                 print("***input_filepath",input_filepath)
-                print("***dataset", Path(input_filepath).parts[1])
+                print("***dataset-3", Path(input_filepath).parts[3])
+                print("***dataset-4", Path(input_filepath).parts[4])
+                print("***dataset-5", Path(input_filepath).parts[5])
                 storage_root = Path(tmp_dir) / Path(
                     self.storage_root.substitute(
                         date=date.strftime("%Y%m%d"),
                         time=time.strftime("%H0000"),
-                        dataset=Path(input_filepath).parts[1],
+                        dataset=Path(input_filepath).parts[3],
                     )
                 )
                 storage_root.mkdir(parents=True, exist_ok=True)
