@@ -1,5 +1,6 @@
 import boto3
 from botocore.config import Config
+import argparse
 from datetime import datetime, timedelta
 import re
 from create_table import create_table
@@ -84,7 +85,7 @@ def filter_keys_by_date(keys):
     return matching_keys[0] if matching_keys else ""
 
 
-def extract_names(input_string):
+def extract_names(stage, input_string):
     pattern = r"[^/]+/[^/]+/\d{8}\.\d{6}/([^/]+)/([^/]+)/"
     match = re.match(pattern, input_string)
 
@@ -93,7 +94,11 @@ def extract_names(input_string):
         raw_table_suffix = match.group(2)
         updated_table_suffix = raw_table_suffix.replace(".", "_")
         table_name = f"{database_name}_{updated_table_suffix}"
-        return database_name, table_name
+        if stage == "test":
+            database_name_updated = database_name + "_test"
+            return database_name_updated, table_name
+        else:
+            return database_name, table_name
     else:
         return None
 
@@ -178,7 +183,13 @@ def check_and_create_batch_task(write_client, database_name, table_name, batch_k
 
 if __name__ == "__main__":
     try:
-        session = boto3.Session()
+        parser = argparse.ArgumentParser(description="Ingest Timestream")
+        parser.add_argument("s3_bucket", type=str, help="Name of S3 Bucket")
+        parser.add_argument(
+            "stage", type=str, help="Specify being run for test or production"
+        )
+        args = parser.parse_args()
+        session = boto3.Session(profile_name="dev")
         s3 = boto3.client("s3")
 
         write_client = session.client(
@@ -189,7 +200,7 @@ if __name__ == "__main__":
             ),
         )
 
-        INPUT_BUCKET_NAME = "a2e-athena-test"
+        INPUT_BUCKET_NAME = args.s3_bucket
         INPUT_OBJECT_KEY_PREFIX = "timestream/jobs/"
 
         # get all the nested folders in INPUT_OBJECT_KEY_PREFIX
@@ -226,8 +237,7 @@ if __name__ == "__main__":
             for batch_key in create_batch_keys:
                 print("batch_key", batch_key)
                 list_of_chunk_keys = None
-                database_name, table_name = extract_names(batch_key)
-
+                database_name, table_name = extract_names(args.stage, batch_key)
                 # if more than 100 files in the folder, then it should continue and not create batch
                 response = s3.list_objects_v2(
                     Bucket=INPUT_BUCKET_NAME, Prefix=batch_key
