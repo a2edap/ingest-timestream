@@ -1,5 +1,6 @@
 import boto3
 from botocore.config import Config
+import argparse
 from datetime import datetime, timedelta
 import re
 from create_table import create_table
@@ -74,17 +75,23 @@ def create_batch_load_task(
         return None
 
 
-def filter_keys_by_date(keys):
-    current_datetime = datetime.now()
-    current_date = current_datetime.strftime("%Y%m%d")
-    previous_hour_time = (current_datetime - timedelta(hours=1)).strftime("%H0000")
-    target_format = current_date + "." + previous_hour_time
+def filter_keys_by_date(stage, keys, target_date_folder=None):
+    if stage == "test":
+        if target_date_folder is None:
+            raise ValueError("target_date_folder is required for stage 'test'")
+        matching_keys = [key for key in keys if target_date_folder in key]
+        return matching_keys[0] if matching_keys else ""
+    else:
+        current_datetime = datetime.now()
+        current_date = current_datetime.strftime("%Y%m%d")
+        previous_hour_time = (current_datetime - timedelta(hours=1)).strftime("%H0000")
+        target_format = current_date + "." + previous_hour_time
 
-    matching_keys = [key for key in keys if target_format in key]
-    return matching_keys[0] if matching_keys else ""
+        matching_keys = [key for key in keys if target_format in key]
+        return matching_keys[0] if matching_keys else ""
 
 
-def extract_names(input_string):
+def extract_names(stage, input_string):
     pattern = r"[^/]+/[^/]+/\d{8}\.\d{6}/([^/]+)/([^/]+)/"
     match = re.match(pattern, input_string)
 
@@ -93,7 +100,11 @@ def extract_names(input_string):
         raw_table_suffix = match.group(2)
         updated_table_suffix = raw_table_suffix.replace(".", "_")
         table_name = f"{database_name}_{updated_table_suffix}"
-        return database_name, table_name
+        if stage == "test":
+            database_name_updated = database_name + "_test"
+            return database_name_updated, table_name
+        else:
+            return database_name, table_name
     else:
         return None
 
@@ -178,7 +189,22 @@ def check_and_create_batch_task(write_client, database_name, table_name, batch_k
 
 if __name__ == "__main__":
     try:
-        session = boto3.Session()
+        parser = argparse.ArgumentParser(description="Ingest Timestream")
+        parser.add_argument("s3_bucket", type=str, help="Name of S3 Bucket")
+        parser.add_argument(
+            "stage", type=str, help="Specify being run for test or production"
+        )
+        parser.add_argument(
+            "--target_date_folder",
+            type=str,
+            help="Target folder in format YYYYMMDD.HHMMSS",
+        )
+        args = parser.parse_args()
+
+        if args.stage == "test" and args.target_folder is None:
+            parser.error("target_folder is required for stage 'test'")
+
+        session = boto3.Session(profile_name="dev", region_name="us-west-2")
         s3 = boto3.client("s3")
 
         write_client = session.client(
@@ -189,7 +215,7 @@ if __name__ == "__main__":
             ),
         )
 
-        INPUT_BUCKET_NAME = "a2e-athena-test"
+        INPUT_BUCKET_NAME = args.s3_bucket
         INPUT_OBJECT_KEY_PREFIX = "timestream/jobs/"
 
         # get all the nested folders in INPUT_OBJECT_KEY_PREFIX
@@ -201,7 +227,9 @@ if __name__ == "__main__":
         ]
         print("allDatetimeKeys", allDatetimeKeys)
 
-        relevantDatetimeKey = filter_keys_by_date(allDatetimeKeys)
+        relevantDatetimeKey = filter_keys_by_date(
+            args.stage, allDatetimeKeys, args.target_date_folder
+        )
         print("relevant datetime key:", relevantDatetimeKey)
 
         # get all the project folders (Only awaken at the moment)
@@ -226,8 +254,7 @@ if __name__ == "__main__":
             for batch_key in create_batch_keys:
                 print("batch_key", batch_key)
                 list_of_chunk_keys = None
-                database_name, table_name = extract_names(batch_key)
-
+                database_name, table_name = extract_names(args.stage, batch_key)
                 # if more than 100 files in the folder, then it should continue and not create batch
                 response = s3.list_objects_v2(
                     Bucket=INPUT_BUCKET_NAME, Prefix=batch_key
