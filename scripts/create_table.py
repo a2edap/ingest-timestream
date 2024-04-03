@@ -50,7 +50,7 @@ if __name__ == "__main__":
     database_name = args.database_name
     table_name = args.table_name
 
-    boto3.setup_default_session(profile_name="dev", region_name="us-west-2")
+    boto3.setup_default_session(region_name="us-west-2")
     write_client = boto3.client(
         "timestream-write",
         config=Config(
