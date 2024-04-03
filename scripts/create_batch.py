@@ -75,14 +75,20 @@ def create_batch_load_task(
         return None
 
 
-def filter_keys_by_date(keys):
-    current_datetime = datetime.now()
-    current_date = current_datetime.strftime("%Y%m%d")
-    previous_hour_time = (current_datetime - timedelta(hours=1)).strftime("%H0000")
-    target_format = current_date + "." + previous_hour_time
+def filter_keys_by_date(stage, keys, target_date_folder=None):
+    if stage == "test":
+        if target_date_folder is None:
+            raise ValueError("target_date_folder is required for stage 'test'")
+        matching_keys = [key for key in keys if target_date_folder in key]
+        return matching_keys[0] if matching_keys else ""
+    else:
+        current_datetime = datetime.now()
+        current_date = current_datetime.strftime("%Y%m%d")
+        previous_hour_time = (current_datetime - timedelta(hours=1)).strftime("%H0000")
+        target_format = current_date + "." + previous_hour_time
 
-    matching_keys = [key for key in keys if target_format in key]
-    return matching_keys[0] if matching_keys else ""
+        matching_keys = [key for key in keys if target_format in key]
+        return matching_keys[0] if matching_keys else ""
 
 
 def extract_names(stage, input_string):
@@ -188,8 +194,17 @@ if __name__ == "__main__":
         parser.add_argument(
             "stage", type=str, help="Specify being run for test or production"
         )
+        parser.add_argument(
+            "--target_date_folder",
+            type=str,
+            help="Target folder in format YYYYMMDD.HHMMSS",
+        )
         args = parser.parse_args()
-        session = boto3.Session(profile_name="dev")
+
+        if args.stage == "test" and args.target_folder is None:
+            parser.error("target_folder is required for stage 'test'")
+
+        session = boto3.Session(profile_name="dev", region_name="us-west-2")
         s3 = boto3.client("s3")
 
         write_client = session.client(
@@ -212,7 +227,9 @@ if __name__ == "__main__":
         ]
         print("allDatetimeKeys", allDatetimeKeys)
 
-        relevantDatetimeKey = filter_keys_by_date(allDatetimeKeys)
+        relevantDatetimeKey = filter_keys_by_date(
+            args.stage, allDatetimeKeys, args.target_date_folder
+        )
         print("relevant datetime key:", relevantDatetimeKey)
 
         # get all the project folders (Only awaken at the moment)
