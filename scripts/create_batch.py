@@ -77,8 +77,9 @@ def create_batch_load_task(
 
 def filter_keys_by_date(stage, keys, target_date_folder=None):
     if stage == "test":
-        if target_date_folder is None:
-            raise ValueError("target_date_folder is required for stage 'test'")
+        if stage == "test" or (stage == "prod" and target_date_folder is not None):
+            if target_date_folder is None:
+                raise ValueError("target_date_folder is required for stage 'test'")
         matching_keys = [key for key in keys if target_date_folder in key]
         return matching_keys[0] if matching_keys else ""
     else:
@@ -225,7 +226,6 @@ if __name__ == "__main__":
         allDatetimeKeys = [
             prefix.get("Prefix") for prefix in response.get("CommonPrefixes", [])
         ]
-        print("allDatetimeKeys", allDatetimeKeys)
 
         relevantDatetimeKey = filter_keys_by_date(
             args.stage, allDatetimeKeys, args.target_date_folder
