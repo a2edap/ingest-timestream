@@ -197,12 +197,12 @@ if __name__ == "__main__":
         parser.add_argument(
             "--target_date_folder",
             type=str,
-            help="Target folder in format YYYYMMDD.HHMMSS",
+            help="Target Date folder in format YYYYMMDD.HHMMSS",
         )
         args = parser.parse_args()
 
-        if args.stage == "test" and args.target_folder is None:
-            parser.error("target_folder is required for stage 'test'")
+        if args.stage == "test" and args.target_date_folder is None:
+            parser.error("target_date_folder is required for stage 'test'")
 
         session = boto3.Session(profile_name="dev", region_name="us-west-2")
         s3 = boto3.client("s3")
