@@ -204,7 +204,7 @@ if __name__ == "__main__":
         if args.stage == "test" and args.target_date_folder is None:
             parser.error("target_date_folder is required for stage 'test'")
 
-        session = boto3.Session(profile_name="dev", region_name="us-west-2")
+        session = boto3.Session(region_name="us-west-2")
         s3 = boto3.client("s3")
 
         write_client = session.client(
