@@ -19,7 +19,7 @@ def log_error(message):
 def create_batch_load_task(
     client, database_name, table_name, input_bucket_name, input_object_key_prefix
 ):
-    report_bucket_name = "a2e-athena-test"
+    report_bucket_name = input_bucket_name
     report_object_key_prefix = "timestream/logs/"
     try:
         result = client.create_batch_load_task(
