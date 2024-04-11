@@ -131,7 +131,7 @@ def copy_files_in_chunks(files, batch_key):
     chunk_keys = []
 
     for i in range(num_chunks):
-        chunk_key = f"{batch_key}chunk{i + 1}/"
+        chunk_key = f"{batch_key}chunk{i + 1}"
         chunk_keys.append(chunk_key)
         chunk_files = files[i * chunk_size : (i + 1) * chunk_size]
         for file in chunk_files:
