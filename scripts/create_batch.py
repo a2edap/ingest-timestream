@@ -262,9 +262,12 @@ if __name__ == "__main__":
                 )
                 if len(files) > 100:
                     list_of_chunk_keys = copy_files_in_chunks(files, batch_key)
+                    print("list_of_chunk_keys", list_of_chunk_keys)
 
                     if list_of_chunk_keys is not None:
                         for key in list_of_chunk_keys:
+                            key = key + "/"
+                            print("key updated", key)
                             table_in_ts = table_exists(
                                 client=write_client,
                                 database_name=database_name,
